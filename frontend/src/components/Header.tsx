@@ -12,7 +12,7 @@ const Header = () => {
                <ul className="flex gap-x-5">
                   <li>
                      <Button className="text-primary" variant="outline">
-                        Додати запит
+                        Створити запит
                      </Button>
                   </li>
                   <li>
