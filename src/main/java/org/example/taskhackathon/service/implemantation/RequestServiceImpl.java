@@ -19,12 +19,12 @@ import static org.example.taskhackathon.entity.constant.Status.TODO;
 public class RequestServiceImpl implements RequestService {
 
     private final RequestRepository requestRepository;
-    private final UserRepository recipientRepository;
+    private final UserRepository userRepository;
 
     @Override
     public ResponseEntity<Request> addRequest(RequestDTO requestDTO) {
-        User recipient = recipientRepository.findByEmail(requestDTO.getRecipientEmail());
-        if (recipient == null) {
+        User user = userRepository.findByEmail(requestDTO.getRecipientEmail());
+        if (user == null) {
             throw new IllegalArgumentException("Recipient with email " + requestDTO.getRecipientEmail() + " not found");
         }
         Request request = Request.builder()
@@ -33,7 +33,7 @@ public class RequestServiceImpl implements RequestService {
                 .priority(requestDTO.getPriority())
                 .status(TODO)
                 .createdAt(String.valueOf(System.currentTimeMillis()))
-                .user(recipient)
+                .user(user)
                 .build();
         requestRepository.save(request);
         return new ResponseEntity<>(request, HttpStatus.CREATED);
