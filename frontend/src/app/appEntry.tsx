@@ -8,7 +8,7 @@ import { Route } from "react-router-dom";
 ReactDOM.createRoot(document.getElementById("root")!).render(
    <React.StrictMode>
       <Providers>
-         <Route path='/' element={<AppRouter />}></Route>
+         <Route path='/*' element={<AppRouter />}></Route>
       </Providers>
    </React.StrictMode>
 );
