@@ -12,7 +12,7 @@ services:
       timeout: 5s
       retries: 3
   service:
-    build: .
+    build: ./backend
     depends_on:
       db:
         condition: service_healthy
