@@ -1,8 +1,8 @@
 import { Button } from "@/app/styles/ui/button";
-import Registration from "./Registration";
+import Registration from "./Registration"; 
 
-
-const Header = () => {
+const Header = () => { 
+   
    return (
       <header className="h-[100px] flex items-center justify-between container mx-auto xl:px-1">
          <div>
@@ -16,7 +16,7 @@ const Header = () => {
                      </Button>
                   </li>
                   <li>
-                     <Registration />
+                     <Registration/>
                   </li>
                </ul> 
          </nav>

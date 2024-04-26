@@ -1,4 +1,6 @@
+import { Provider } from "react-redux";
 import { BrowserRouter, Routes } from "react-router-dom";
+import { store } from "./redux/store";
 
 interface ProvidersProps {
    children: React.ReactNode;
@@ -6,11 +8,13 @@ interface ProvidersProps {
 
 const Providers = ({ children }: ProvidersProps) => {
    return (
-      <BrowserRouter>
-         <Routes>
-            {children}
-         </Routes>
-      </BrowserRouter>
+      <Provider store={store}>
+         <BrowserRouter>
+            <Routes>
+               {children}
+            </Routes>
+         </BrowserRouter>
+      </Provider>
    );
 };
 
