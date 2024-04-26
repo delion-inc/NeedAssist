@@ -1,3 +1,4 @@
+
 # NeedAssist
 NeedAssist is an online platform designed to centralize urgent requests from people seeking assistance. Whether it’s finding critical information, connecting with volunteers, or offering support, NeedAssist aims to bridge the gap between those in need and those willing to help.
 
@@ -144,3 +145,4 @@ NeedAssist is an online platform designed to centralize urgent requests from peo
 - **DELETE** `http://localhost:8080/api/request/delete/{ID}` - Delete user request, through JWT, we check whether this is really your request
   - PathVariable, ID
   - Response: 200, OK
+

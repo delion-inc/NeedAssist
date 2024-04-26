@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="JavaScriptLibraryMappings">
+    <excludedPredefinedLibrary name="TaskHackathon/backend/OSPanel/modules/database/PostgreSQL-9.6/pgAdmin 4/bin/node_modules" />
+  </component>
+</project>
