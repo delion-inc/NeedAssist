@@ -6,7 +6,7 @@ export const loginSlice = authApi.injectEndpoints({
       login: builder.mutation<IAuthResponse, IAuthCredentials>({
          query: (credentials) => ({
             // url: "/auth",
-            url: "/auth",
+            url: "/api/user/authorization",
             method: "POST",
             body: { ...credentials },
          }),

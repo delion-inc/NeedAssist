@@ -2,11 +2,14 @@ import authApi from "@/api/authApi";
 import { IAuthResponse } from "@/types/auth.interface";
 
 export const refreshSlice = authApi.injectEndpoints({
-   endpoints: (builder) => ({
-      refresh: builder.query<IAuthResponse, void>({
-         query: () => "/refresh",
+   endpoints: (builder) => ({ 
+      refresh: builder.mutation<void, IAuthResponse>({
+         query: () => ({
+            url: "/api/user/refresh",
+            method: "POST",
+         }),
       }),
    }),
 });
 
-export const { useRefreshQuery } = refreshSlice;
+export const { useRefreshMutation } = refreshSlice;
