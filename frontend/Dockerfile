@@ -1,10 +1,8 @@
-FROM node:14 AS build
+FROM node:20
 WORKDIR /app
-COPY package*.json yarn.lock ./
+COPY package*.json ./
 RUN yarn install
+COPY yarn.lock vite.config.ts tailwind.config.js ./
 COPY . .
 RUN yarn build
-FROM nginx:1.19.0-alpine AS production
-COPY --from=build /app/build /usr/share/nginx/html
-EXPOSE 80
-CMD ["nginx", "-g", "daemon off;"]
+CMD ["yarn", "preview"]
