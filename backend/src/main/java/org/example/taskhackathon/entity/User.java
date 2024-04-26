@@ -44,6 +44,9 @@ public class User {
     @Column(name = "refresh-token")
     private String refreshToken;
 
+    @Column(name = "user_role")
+    private Role role;
+
     @ElementCollection(fetch = FetchType.EAGER)
     private List<Role> roles = new ArrayList<>();
 
