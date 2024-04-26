@@ -31,23 +31,23 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         User user = getUserByEmail(email);
-        List<Role> roles = user.getRole();
+        List<Role> roles = user.getRoles();
         List<SimpleGrantedAuthority> authorities = roles.stream()
                 .map(role -> new SimpleGrantedAuthority(role.name()))
                 .collect(Collectors.toList());
-        return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), authorities);
+        return new org.springframework.security.core.userdetails.User(user.getName(), user.getPassword(), authorities);
     }
 
     @Override
     public ResponseEntity<?> registration(User user, String role) {
-        if(user.getEmail() == null || user.getPassword() == null || user.getCity() == null || user.getPhone() == null) {
+        if(user.getEmail() == null || user.getPassword() == null || user.getName() == null || user.getSurname() == null || user.getPhone() == null) {
             return new ResponseEntity<>("All fields must be filled", HttpStatus.BAD_REQUEST);
         }
         if(userRepository.findByEmail(user.getEmail()) != null) {
             return new ResponseEntity<>("User with email " + user.getEmail() + " already exist", HttpStatus.BAD_REQUEST);
         }
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        user.setRole(Collections.singletonList(Role.valueOf(role)));
+        user.setRoles(Collections.singletonList(Role.valueOf(role)));
         userRepository.save(user);
         return new ResponseEntity<>(user, HttpStatus.CREATED);
     }
@@ -59,7 +59,7 @@ public class UserServiceImpl implements UserDetailsService, UserService {
             return new ResponseEntity<>("Invalid password", HttpStatus.UNAUTHORIZED);
         }
 
-        List<GrantedAuthority> authorities = user.getRole().stream()
+        List<GrantedAuthority> authorities = user.getRoles().stream()
                 .map(role -> new SimpleGrantedAuthority(role.name()))
                 .collect(Collectors.toList());
         UserDetails userDetails = new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), authorities);
@@ -70,7 +70,7 @@ public class UserServiceImpl implements UserDetailsService, UserService {
 
         Map<String, Object> responseBody = new HashMap<>();
         jwtTokenService.setTokenCookies(response, refreshToken);
-        List<Integer> roleValues = user.getRole().stream()
+        List<Integer> roleValues = user.getRoles().stream()
                 .map(Role::getValue)
                 .toList();
         responseBody.put("roles", roleValues);
@@ -90,7 +90,7 @@ public class UserServiceImpl implements UserDetailsService, UserService {
 
         Map<String, Object> responseBody = new HashMap<>();
         jwtTokenService.setTokenCookies(response, refreshToken);
-        List<Integer> roleValues = user.getRole().stream()
+        List<Integer> roleValues = user.getRoles().stream()
                 .map(Role::getValue)
                 .toList();
         responseBody.put("roles", roleValues);

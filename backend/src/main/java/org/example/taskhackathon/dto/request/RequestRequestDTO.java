@@ -8,4 +8,5 @@ public class RequestRequestDTO {
     private String title;
     private String description;
     private Priority priority;
+    private String city;
 }

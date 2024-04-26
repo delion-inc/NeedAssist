@@ -31,6 +31,9 @@ public class Request {
     @Column(name = "created_at", nullable = false)
     String createdAt;
 
+    @Column(name = "city", nullable = false)
+    String city;
+
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;

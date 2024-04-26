@@ -36,6 +36,7 @@ public class RequestServiceImpl implements RequestService {
                 .description(requestDTO.getDescription())
                 .priority(requestDTO.getPriority())
                 .createdAt(createTime())
+                .city(requestDTO.getCity())
                 .user(user)
                 .build();
         requestRepository.save(request);
@@ -50,7 +51,7 @@ public class RequestServiceImpl implements RequestService {
     @Override
     public ResponseEntity<List<RequestResponseDTO>> getAll(String role) {
         List<RequestResponseDTO> requests = requestRepository.findAll().stream()
-                .filter(request -> request.getUser().getRole().stream().anyMatch(r -> r.name().equals(role)))
+                .filter(request -> request.getUser().getRoles().stream().anyMatch(r -> r.name().equals(role)))
                 .map(this::mapRequestToRequestResDTO)
                 .collect(Collectors.toList());
         return new ResponseEntity<>(requests, HttpStatus.OK);
@@ -69,11 +70,12 @@ public class RequestServiceImpl implements RequestService {
                 .description(request.getDescription())
                 .priority(request.getPriority())
                 .createdAt(request.getCreatedAt())
+                .city(request.getCity())
                 .user(UserDTO.builder()
-                        .username(request.getUser().getUsername())
+                        .name(request.getUser().getName())
+                        .surname(request.getUser().getSurname())
                         .email(request.getUser().getEmail())
                         .phone(request.getUser().getPhone())
-                        .city(request.getUser().getCity())
                         .build())
                 .build();
     }

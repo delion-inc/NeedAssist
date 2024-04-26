@@ -12,5 +12,6 @@ public class RequestResponseDTO {
     private String description;
     private Priority priority;
     private String createdAt;
+    private String city;
     private UserDTO user;
 }

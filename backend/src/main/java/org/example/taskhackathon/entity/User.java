@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.example.taskhackathon.entity.constant.Role;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -21,8 +22,11 @@ public class User {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @Column(name = "username", nullable = false)
-    String username;
+    @Column(name = "name", nullable = false)
+    String name;
+
+    @Column(name = "surname", nullable = false)
+    String surname;
 
     @Column(name = "email", nullable = false)
     String email;
@@ -33,9 +37,6 @@ public class User {
     @Column(name = "phone", nullable = false)
     String phone;
 
-    @Column(name = "city", nullable = false)
-    String city;
-
     @OneToMany(mappedBy = "user")
     @JsonIgnore
     List<Request> requests;
@@ -43,6 +44,7 @@ public class User {
     @Column(name = "refresh-token")
     private String refreshToken;
 
-    @Column(name = "role", nullable = false)
-    private List<Role> role;
+    @ElementCollection(fetch = FetchType.EAGER)
+    private List<Role> roles = new ArrayList<>();
+
 }

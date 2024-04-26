@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/TaskHackathon.iml" filepath="$PROJECT_DIR$/.idea/TaskHackathon.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/NeedAssist.iml" filepath="$PROJECT_DIR$/.idea/NeedAssist.iml" />
     </modules>
   </component>
 </project>
