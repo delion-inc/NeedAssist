@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.security.Principal;
 
 @RestController()
+@CrossOrigin
 @RequestMapping("/api/request")
 @RequiredArgsConstructor
 public class RequestController {

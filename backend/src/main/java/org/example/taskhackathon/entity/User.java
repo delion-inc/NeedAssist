@@ -45,7 +45,7 @@ public class User {
     private String refreshToken;
 
     @Column(name = "user_role")
-    private Role role;
+    private Integer role;
 
     @ElementCollection(fetch = FetchType.EAGER)
     private List<Role> roles = new ArrayList<>();
