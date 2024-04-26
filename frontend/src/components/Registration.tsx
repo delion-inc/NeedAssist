@@ -1,88 +1,52 @@
-// import { useRegisterMutation } from "@/api";
-import { selectOpenRegister } from "@/app/redux/selectors";
-import { toggleRegisterModal } from "@/app/redux/slices/modalSlice";
 import { Button } from "@/app/styles/ui/button";
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/app/styles/ui/dialog";
-import { initialState } from "@/utils/reducers/registerInitState";
-import { reducer } from "@/utils/reducers/registerReducer";
-import { useEffect, useReducer, useRef, useState } from "react"; 
-import { useDispatch, useSelector } from "react-redux";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/app/styles/ui/card";
+import { Dialog, DialogContent, DialogTrigger } from "@/app/styles/ui/dialog";
+import { RegisterSchema } from "@/utils/schema";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import RegistrationForm from "./RegistrationForm";
+import { RegisterFormData } from "@/types/auth.interface";
 
 const Registration = () => {
-   const userRef = useRef<HTMLInputElement>(null);
-   const errRef = useRef<HTMLInputElement>(null);
-   const [agree, setAgree] = useState(false);
+   const form = useForm<RegisterFormData>({
+      resolver: zodResolver(RegisterSchema),
+      defaultValues: {
+         name: "",
+         surname: "",
+         email: "",
+         phone: "",
+         password: "",
+         confirmPassword: "",
+      },
+   });
 
-   const open = useSelector(selectOpenRegister);
-   const reduxDispatch = useDispatch()
+   async function onSubmit(data: z.infer<typeof RegisterSchema>) {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { confirmPassword, ...dataToSend } = data;
+      console.log(dataToSend);
+   }
 
-
-   const [state, dispatch] = useReducer(reducer, initialState);
-
-   // const [register, { isLoading }] = useRegisterMutation();
-
-   useEffect(() => {
-      userRef.current?.focus();
-   }, []);
-
-   useEffect(() => {
-      dispatch({ type: "SET_NAME", payload: state.name });
-   }, [state.name]);
-
-   useEffect(() => {
-      dispatch({ type: "SET_PASSWORD", payload: state.password });
-      dispatch({ type: "SET_MATCH_PASSWORD", payload: state.matchPassword});
-   }, [state.password, state.matchPassword]);
-
-   useEffect(() => {
-      dispatch({ type: "SET_ERR_MSG", payload: "" });
-   }, [state.name, state.password, state.matchPassword]);
-
-   const handleSubmit = async (e: React.FormEvent) => {
-      e.preventDefault();
-      try {
-         console.log("state", state); 
-         // await register({ name: state.name, password: state.password }).unwrap();
-         dispatch({ type: "SET_SUCCESS", payload: true });
-         dispatch({ type: "SET_NAME", payload: "" });
-         dispatch({ type: "SET_PASSWORD", payload: "" });
-         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      } catch (err: any) {
-         if (!err?.originalStatus) {
-            dispatch({ type: "SET_ERR_MSG", payload: "No Server Response" });
-         } else if (err.originalStatus === 400) {
-            dispatch({ type: "SET_ERR_MSG", payload: "Missing Username or Password" });
-         } else if (err.originalStatus === 401) {
-            dispatch({ type: "SET_ERR_MSG", payload: "User already exists" });
-         } else {
-            dispatch({ type: "SET_ERR_MSG", payload: "Registration Failed" });
-         }
-         errRef.current?.focus();
-      }
-   };
-
-   
    return (
-      <Dialog open={open} onOpenChange={() => reduxDispatch(toggleRegisterModal())}>
+      <Dialog>
          <DialogTrigger asChild>
             <Button>Зареєструватись</Button>
          </DialogTrigger>
-         <DialogContent className="sm:max-w-[425px]">
-            <DialogHeader>
-               <DialogTitle>Edit profile</DialogTitle>
-               <DialogDescription>Make changes to your profile here. Click save when you're done.</DialogDescription>
-            </DialogHeader>
-            <div className="grid gap-4 py-4">
-               <div className="grid grid-cols-4 items-center gap-4">
-                  <input type="text" />
-               </div>
-               <div className="grid grid-cols-4 items-center gap-4">
-                  <input type="text" />
-               </div>
-            </div>
-            <DialogFooter>
-               <Button type="submit">Save changes</Button>
-            </DialogFooter>
+         <DialogContent className="sm:max-w-[500px] flex flex-col p-0">
+            <Card className="bg-background">
+               <CardHeader>
+                  <CardTitle>Реєстрація</CardTitle>
+                  <CardDescription>Зареєструйтесь на сайті, щоб мати змогу робити запити та допомагати.</CardDescription>
+               </CardHeader>
+               <CardContent>
+                  <RegistrationForm form={form} onSubmit={onSubmit} />
+               </CardContent>
+               <CardFooter className="grid">
+                  <Button form="register-form" type="submit" className="w-full">
+                     Зареєструватись
+                  </Button>
+               </CardFooter>
+            </Card>
          </DialogContent>
       </Dialog>
    );
