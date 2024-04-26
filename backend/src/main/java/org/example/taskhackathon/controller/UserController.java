@@ -16,14 +16,9 @@ public class UserController {
 
     private final UserService userService;
 
-    @PostMapping("/registration/recipient")
+    @PostMapping("/registration")
     public ResponseEntity<?> registrationRecipient(@RequestBody User recipient) {
-        return userService.registration(recipient, "ROLE_RECIPIENT");
-    }
-
-    @PostMapping("/registration/helper")
-    public ResponseEntity<?> registrationHelper(@RequestBody User helper) {
-        return userService.registration(helper, "ROLE_HELPER");
+        return userService.registration(recipient);
     }
 
     @PostMapping("/authorization")

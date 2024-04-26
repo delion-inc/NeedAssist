@@ -4,6 +4,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.example.taskhackathon.config.JwtTokenService;
 import org.example.taskhackathon.dto.request.AuthRequest;
+import org.example.taskhackathon.dto.response.UserDTO;
 import org.example.taskhackathon.entity.User;
 import org.example.taskhackathon.entity.constant.Role;
 import org.example.taskhackathon.repository.UserRepository;
@@ -39,17 +40,25 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     }
 
     @Override
-    public ResponseEntity<?> registration(User user, String role) {
+    public ResponseEntity<?> registration(User user) {
         if(user.getEmail() == null || user.getPassword() == null || user.getName() == null || user.getSurname() == null || user.getPhone() == null) {
             return new ResponseEntity<>("All fields must be filled", HttpStatus.BAD_REQUEST);
         }
         if(userRepository.findByEmail(user.getEmail()) != null) {
             return new ResponseEntity<>("User with email " + user.getEmail() + " already exist", HttpStatus.BAD_REQUEST);
         }
+
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        user.setRoles(Collections.singletonList(Role.valueOf(role)));
+        user.setRoles(Collections.singletonList(user.getRole()));
         userRepository.save(user);
-        return new ResponseEntity<>(user, HttpStatus.CREATED);
+
+        UserDTO userDTO = UserDTO.builder()
+                .name(user.getName())
+                .surname(user.getSurname())
+                .email(user.getEmail())
+                .phone(user.getPhone())
+                .build();
+        return new ResponseEntity<>(userDTO, HttpStatus.CREATED);
     }
 
     @Override
