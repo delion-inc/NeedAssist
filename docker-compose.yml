@@ -17,3 +17,7 @@ services:
       SPRING_DATASOURCE_USERNAME: postgres
       SPRING_DATASOURCE_PASSWORD: 12345
       SPRING_DATASOURCE_DRIVER_CLASS_NAME: org.postgresql.Driver
+#  frontend:
+#    build: ./frontend
+#    ports:
+#      - 4137:4137
