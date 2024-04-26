@@ -1,18 +1,25 @@
-import { useRegisterMutation } from "@/api";
+// import { useRegisterMutation } from "@/api";
+import { selectOpenRegister } from "@/app/redux/selectors";
+import { toggleRegisterModal } from "@/app/redux/slices/modalSlice";
 import { Button } from "@/app/styles/ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/app/styles/ui/dialog";
 import { initialState } from "@/utils/reducers/registerInitState";
 import { reducer } from "@/utils/reducers/registerReducer";
-import { useEffect, useReducer, useRef, useState } from "react";
+import { useEffect, useReducer, useRef, useState } from "react"; 
+import { useDispatch, useSelector } from "react-redux";
 
 const Registration = () => {
    const userRef = useRef<HTMLInputElement>(null);
    const errRef = useRef<HTMLInputElement>(null);
    const [agree, setAgree] = useState(false);
 
+   const open = useSelector(selectOpenRegister);
+   const reduxDispatch = useDispatch()
+
+
    const [state, dispatch] = useReducer(reducer, initialState);
 
-   const [register, { isLoading }] = useRegisterMutation();
+   // const [register, { isLoading }] = useRegisterMutation();
 
    useEffect(() => {
       userRef.current?.focus();
@@ -35,7 +42,7 @@ const Registration = () => {
       e.preventDefault();
       try {
          console.log("state", state); 
-         await register({ name: state.name, password: state.password }).unwrap();
+         // await register({ name: state.name, password: state.password }).unwrap();
          dispatch({ type: "SET_SUCCESS", payload: true });
          dispatch({ type: "SET_NAME", payload: "" });
          dispatch({ type: "SET_PASSWORD", payload: "" });
@@ -56,7 +63,7 @@ const Registration = () => {
 
    
    return (
-      <Dialog>
+      <Dialog open={open} onOpenChange={() => reduxDispatch(toggleRegisterModal())}>
          <DialogTrigger asChild>
             <Button>Зареєструватись</Button>
          </DialogTrigger>
