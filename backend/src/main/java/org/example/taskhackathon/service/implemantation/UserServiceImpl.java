@@ -49,7 +49,7 @@ public class UserServiceImpl implements UserDetailsService, UserService {
         }
 
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        user.setRoles(Collections.singletonList(user.getRole()));
+        user.setRoles(Collections.singletonList(Role.fromValue(user.getRole())));
         userRepository.save(user);
 
         UserDTO userDTO = UserDTO.builder()

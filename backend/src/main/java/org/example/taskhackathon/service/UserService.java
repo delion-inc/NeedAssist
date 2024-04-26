@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 public interface UserService {
 
     ResponseEntity<?> registration(User user);
+
     ResponseEntity<?> authorization(AuthRequest authRequest, HttpServletResponse response);
 
     ResponseEntity<?> refreshAuthToken(String refreshToken, HttpServletResponse response);
