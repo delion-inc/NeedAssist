@@ -45,7 +45,7 @@ public class UserServiceImpl implements UserDetailsService, UserService {
             return new ResponseEntity<>("All fields must be filled", HttpStatus.BAD_REQUEST);
         }
         if(userRepository.findByEmail(user.getEmail()) != null) {
-            return new ResponseEntity<>("User with email " + user.getEmail() + " already exist", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("User with email " + user.getEmail() + " already exist", HttpStatus.UNAUTHORIZED);
         }
 
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
