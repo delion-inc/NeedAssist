@@ -7,29 +7,20 @@ NeedAssist is an online platform designed to centralize urgent requests from peo
 ## **API Documentation**
 
 ### **User Controller**
+ROLE_HELPER - 2001   
+ROLE _RECIPIENT - 5320
 
-- **POST** `http://localhost:8080/api/user/registration/helper` - Create a helper (a user who will help people)
+- **POST** `http://localhost:8080/api/user/registration` - Create a helper or recipient (you will choice in request body)
   - Request Body, User:
     ```json
     {
-        "username": "qwertyH",
+        "name": "qwertyHN",
+        "surname": "qwertyHS",
         "email": "qwertyH@gmail.com",
         "password": "qwertyH",
         "phone": "123-456-7890",
-        "city": "Lviv"
-    }
-    ```
-  - Response: User, 201, Created
-
-- **POST** `http://localhost:8080/api/user/registration/recipient` - Create a recipient (a user who needs help)
-  - Request Body, User:
-    ```json
-    {
-        "username": "qwertyP",
-        "email": "qwertyP@gmail.com",
-        "password": "qwertyP",
-        "phone": "123-456-7890",
-        "city": "Ternopil"
+        "city": "Lviv",
+        "role": 2001
     }
     ```
   - Response: User, 201, Created
@@ -78,7 +69,8 @@ NeedAssist is an online platform designed to centralize urgent requests from peo
     {
         "title": "допомога з одягом",
         "description": "потрібний одяг XL дуже сильно для дитини",
-        "priority": "HIGH"
+        "priority": "HIGH",
+        "city": "Lviv"
     }
     ```
   - Response: RequestDTO, 201, Created
@@ -93,11 +85,12 @@ NeedAssist is an online platform designed to centralize urgent requests from peo
         "description": "потрібний одяг XL дуже сильно для дитини",
         "priority": "HIGH",
         "createdAt": "2024-04-25 23:55:36",
+        "city": "Lviv"
         "user": {
-            "username": "qwertyR",
+            "name": "qwertyRN",
+            "surname": "qwertyRS",
             "email": "qwertyR@gmail.com",
-            "phone": "123-456-7890",
-            "city": "lviv"
+            "phone": "123-456-7890"
         }
     }
     ```
@@ -112,14 +105,15 @@ NeedAssist is an online platform designed to centralize urgent requests from peo
         "description": "потрібний одяг XL дуже сильно для дитини",
         "priority": "HIGH",
         "createdAt": "2024-04-25 23:55:36",
+        "city": "Lviv"
         "user": {
-            "username": "qwertyR",
+            "name": "qwertyRN",
+            "surname": "qwertyRS",
             "email": "qwertyR@gmail.com",
-            "phone": "123-456-7890",
-            "city": "lviv"
+            "phone": "123-456-7890"
         }
-      }
-    ]
+    }
+  ]
     ```
 
 - **GET** `http://localhost:8080/api/request/get-all-proposes` - Get all proposes for recipient, you will get request only which were published by helpers
@@ -127,19 +121,20 @@ NeedAssist is an online platform designed to centralize urgent requests from peo
     ```json
     [
       {
-        "id": 2,
-        "title": "віддаю одяг для дітей",
-        "description": "куртка, футболка, стан хороший",
+        "id": 1,
+        "title": "допомога з одягом",
+        "description": "потрібний одяг XL дуже сильно для дитини",
         "priority": "HIGH",
         "createdAt": "2024-04-25 23:55:36",
+        "city": "Lviv"
         "user": {
-            "username": "qwertyH",
-            "email": "qwertyH@gmail.com",
-            "phone": "123-456-7890",
-            "city": "lviv"
+            "name": "qwertyRN",
+            "surname": "qwertyRS",
+            "email": "qwertyR@gmail.com",
+            "phone": "123-456-7890"
         }
-      }
-    ]
+    }
+  ]
     ```
 
 - **DELETE** `http://localhost:8080/api/request/delete/{ID}` - Delete user request, through JWT, we check whether this is really your request
