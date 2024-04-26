@@ -9,7 +9,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.example.taskhackathon.entity.constant.Role;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
@@ -26,21 +25,25 @@ public class JwtTokenFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+        String jwt = extractToken(request);
+        if (jwt != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+            authenticateUser(jwt);
+        }
+        filterChain.doFilter(request, response);
+    }
+
+    private String extractToken(HttpServletRequest request) {
         String authHeader = request.getHeader("Authorization");
-        String email = null;
         String jwt = null;
         if (authHeader != null && authHeader.startsWith("Bearer ")) {
             jwt = authHeader.substring(7);
-            try {
-                email = jwtTokenService.getEmail(jwt);
-            } catch (ExpiredJwtException e) {
-                logger.debug("Time of token expired");
-            } catch (SignatureException e) {
-                logger.debug("Invalid token signature");
-            }
         }
+        return jwt;
+    }
 
-        if (email != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+    private void authenticateUser(String jwt) {
+        try {
+            String email = jwtTokenService.getEmail(jwt);
             List<Role> roles = jwtTokenService.getRoles(jwt);
             List<SimpleGrantedAuthority> authorities = roles.stream()
                     .map(role -> new SimpleGrantedAuthority(role.toString()))
@@ -51,7 +54,10 @@ public class JwtTokenFilter extends OncePerRequestFilter {
                     authorities
             );
             SecurityContextHolder.getContext().setAuthentication(token);
+        } catch (ExpiredJwtException e) {
+            logger.debug("Time of token expired");
+        } catch (SignatureException e) {
+            logger.debug("Invalid token signature");
         }
-        filterChain.doFilter(request, response);
     }
 }

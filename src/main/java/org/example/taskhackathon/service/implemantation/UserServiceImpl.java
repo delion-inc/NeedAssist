@@ -3,8 +3,7 @@ package org.example.taskhackathon.service.implemantation;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.example.taskhackathon.config.JwtTokenService;
-import org.example.taskhackathon.dto.AuthRequest;
-import org.example.taskhackathon.dto.JwtResponse;
+import org.example.taskhackathon.dto.request.AuthRequest;
 import org.example.taskhackathon.entity.User;
 import org.example.taskhackathon.entity.constant.Role;
 import org.example.taskhackathon.repository.UserRepository;
@@ -21,7 +20,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.*;
 import java.util.stream.Collectors;
-
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserDetailsService, UserService {
@@ -32,12 +30,8 @@ public class UserServiceImpl implements UserDetailsService, UserService {
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        User user = userRepository.findByEmail(email);
-        if (user == null) {
-            throw new UsernameNotFoundException("User not found");
-        }
-        String token = jwtTokenService.getToken(email);
-        List<Role> roles = jwtTokenService.getRoles(token);
+        User user = getUserByEmail(email);
+        List<Role> roles = user.getRole();
         List<SimpleGrantedAuthority> authorities = roles.stream()
                 .map(role -> new SimpleGrantedAuthority(role.name()))
                 .collect(Collectors.toList());
@@ -60,10 +54,7 @@ public class UserServiceImpl implements UserDetailsService, UserService {
 
     @Override
     public ResponseEntity<?> authorization(AuthRequest authRequest, HttpServletResponse response) {
-        User user = userRepository.findByEmail(authRequest.getEmail());
-        if (user == null) {
-            return new ResponseEntity<>("user not found", HttpStatus.NOT_FOUND);
-        }
+        User user = getUserByEmail(authRequest.getEmail());
         if (!bCryptPasswordEncoder.matches(authRequest.getPassword(), user.getPassword())) {
             return new ResponseEntity<>("Invalid password", HttpStatus.UNAUTHORIZED);
         }
@@ -85,6 +76,43 @@ public class UserServiceImpl implements UserDetailsService, UserService {
         responseBody.put("roles", roleValues);
         responseBody.put("accessToken", accessToken);
         return  new ResponseEntity<> (responseBody, HttpStatus.OK);
-//        return new ResponseEntity<>(new JwtResponse(accessToken, refreshToken, roleValues), HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity<?> refreshAuthToken(String refreshToken, HttpServletResponse response) {
+        User user = userRepository.findByRefreshToken(refreshToken);
+        if (user == null) {
+            return new ResponseEntity<>("Invalid refreshToken", HttpStatus.BAD_REQUEST);
+        }
+
+        UserDetails userDetails = loadUserByUsername(user.getEmail());
+        String accessToken = jwtTokenService.generateToken(userDetails);
+
+        Map<String, Object> responseBody = new HashMap<>();
+        jwtTokenService.setTokenCookies(response, refreshToken);
+        List<Integer> roleValues = user.getRole().stream()
+                .map(Role::getValue)
+                .toList();
+        responseBody.put("roles", roleValues);
+        responseBody.put("accessToken", accessToken);
+        jwtTokenService.setTokenCookies(response, refreshToken);
+        userRepository.save(user);
+        return new ResponseEntity<>(responseBody, HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity<?> logout(String refreshToken, HttpServletResponse response) {
+        User user = userRepository.findByRefreshToken(refreshToken);
+        if (user == null) {
+            return new ResponseEntity<>("Invalid refreshToken", HttpStatus.BAD_REQUEST);
+        }
+        user.setRefreshToken("");
+        userRepository.save(user);
+        response.setHeader("Set-Cookie", "refreshToken=; HttpOnly; SameSite=None; Secure; Max-age=0");
+        return ResponseEntity.noContent().build();
+    }
+
+    private User getUserByEmail(String email) {
+        return userRepository.findByEmail(email);
     }
 }

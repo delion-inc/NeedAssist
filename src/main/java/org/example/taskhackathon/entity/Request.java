@@ -6,7 +6,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.example.taskhackathon.entity.constant.Priority;
-import org.example.taskhackathon.entity.constant.Status;
 
 @Data
 @AllArgsConstructor
@@ -28,9 +27,6 @@ public class Request {
 
     @Column(name = "priority", nullable = false)
     Priority priority;
-
-    @Column(name = "status", nullable = false)
-    Status status;
 
     @Column(name = "created_at", nullable = false)
     String createdAt;

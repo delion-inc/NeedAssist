@@ -1,2 +1,23 @@
-# NeedAssist
-NeedAssist is an online platform designed to centralize urgent requests from people seeking assistance. Whether it’s finding critical information, connecting with volunteers, or offering support, NeedAssist aims to bridge the gap between those in need and those willing to help.
+Project Description
+
+This project is a web application developed using Spring Boot and PostgreSQL for the backend.
+
+http://localhost:8080/api/helper/registration - GET request
+http://localhost:8080/api/helper/authorization -
+http://localhost:8080/api/recipient/registration -
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+http://localhost:8080/api/recipient/authorization -

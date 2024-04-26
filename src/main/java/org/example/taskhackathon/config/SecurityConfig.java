@@ -33,8 +33,7 @@ public class SecurityConfig {
                 .cors(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authorizeRequests ->
                         authorizeRequests
-                                .requestMatchers("/api/helper/**").permitAll()
-                                .requestMatchers("/api/recipient/**").permitAll()
+                                .requestMatchers("/api/user/**").permitAll()
                                 .requestMatchers("/api/request/**").hasAnyRole("HELPER", "RECIPIENT")
                 )
                 .sessionManagement(c -> c.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

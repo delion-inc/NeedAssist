@@ -1,24 +1,20 @@
 package org.example.taskhackathon.config;
 
 import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import jakarta.servlet.http.HttpServletResponse;
 import org.example.taskhackathon.entity.constant.Role;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
-
 import java.time.Duration;
+import java.time.Instant;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
 @Service
@@ -49,13 +45,6 @@ public class JwtTokenService {
                 .getBody();
     }
 
-    public String getToken(String email) {
-        return Jwts.builder()
-                .setSubject(email)
-                .signWith(SignatureAlgorithm.HS256, secret)
-                .compact();
-    }
-
     public String generateToken(UserDetails userDetails) {
         return generateJwt(userDetails, jwtAccessTokenLifetime);
     }
@@ -69,26 +58,31 @@ public class JwtTokenService {
         response.setHeader("Set-Cookie", cookieValue);
     }
 
-    private String generateJwt(UserDetails userDetails, Duration lifetime) {
-        Map<String, Object> header = new HashMap<>();
+    private Map<String, Object> createJwtHeader() {
+        Map<String, Object> header = new ConcurrentHashMap<>();
         header.put("typ", "JWT");
         header.put("alg", "HS256");
+        return header;
+    }
 
-        Map<String, Object> claims = new HashMap<>();
+    private String generateJwt(UserDetails userDetails, Duration lifetime) {
+        Map<String, Object> header = createJwtHeader();
+
+        Map<String, Object> claims = new ConcurrentHashMap<>();
         List<Role> roles = userDetails.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
                 .map(Role::valueOf)
                 .collect(Collectors.toList());
         claims.put("roles", roles);
 
-        Date issuedDate = new Date();
-        Date expiredDate = new Date(issuedDate.getTime() + lifetime.toMillis());
+        Instant issuedDate = Instant.now();
+        Instant expiredDate = issuedDate.plus(lifetime);
         return Jwts.builder()
                 .setHeader(header)
                 .setClaims(claims)
                 .setSubject(userDetails.getUsername())
-                .setIssuedAt(issuedDate)
-                .setExpiration(expiredDate)
+                .setIssuedAt(Date.from(issuedDate))
+                .setExpiration(Date.from(expiredDate))
                 .signWith(SignatureAlgorithm.HS256, secret)
                 .compact();
     }
