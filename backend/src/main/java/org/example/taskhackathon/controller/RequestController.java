@@ -35,10 +35,5 @@ public class RequestController {
     public ResponseEntity<?> getAllPropose() {
         return requestService.getAll("ROLE_HELPER");
     }
-
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity<?> deleteRequest(@PathVariable Long id, Principal principal) {
-        return requestService.deleteRequest(id, principal.getName());
-    }
 }
 

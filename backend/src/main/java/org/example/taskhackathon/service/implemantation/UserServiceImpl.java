@@ -77,14 +77,9 @@ public class UserServiceImpl implements UserDetailsService, UserService {
         user.setRefreshToken(refreshToken);
         userRepository.save(user);
 
-        Map<String, Object> responseBody = new HashMap<>();
         jwtTokenService.setTokenCookies(response, refreshToken);
-        List<Integer> roleValues = user.getRoles().stream()
-                .map(Role::getValue)
-                .toList();
-        responseBody.put("roles", roleValues);
-        responseBody.put("accessToken", accessToken);
-        return  new ResponseEntity<> (responseBody, HttpStatus.OK);
+        Map<String, Object> responseBody = createResponseBody(user, accessToken);
+        return new ResponseEntity<>(responseBody, HttpStatus.OK);
     }
 
     @Override
@@ -97,16 +92,20 @@ public class UserServiceImpl implements UserDetailsService, UserService {
         UserDetails userDetails = loadUserByUsername(user.getEmail());
         String accessToken = jwtTokenService.generateToken(userDetails);
 
-        Map<String, Object> responseBody = new HashMap<>();
         jwtTokenService.setTokenCookies(response, refreshToken);
+        Map<String, Object> responseBody = createResponseBody(user, accessToken);
+        userRepository.save(user);
+        return new ResponseEntity<>(responseBody, HttpStatus.OK);
+    }
+
+    private Map<String, Object> createResponseBody(User user, String accessToken) {
+        Map<String, Object> responseBody = new HashMap<>();
         List<Integer> roleValues = user.getRoles().stream()
                 .map(Role::getValue)
                 .toList();
         responseBody.put("roles", roleValues);
         responseBody.put("accessToken", accessToken);
-        jwtTokenService.setTokenCookies(response, refreshToken);
-        userRepository.save(user);
-        return new ResponseEntity<>(responseBody, HttpStatus.OK);
+        return responseBody;
     }
 
     @Override
