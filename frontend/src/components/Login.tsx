@@ -53,37 +53,10 @@ const Login = () => {
    return (
       <Dialog open={open} onOpenChange={() => dispatch(toggleLoginModal())}>
          <DialogTrigger asChild>
-            <Button>Увійти</Button>
+            <Button>Допомогти</Button>
          </DialogTrigger>
          <DialogContent className="sm:max-w-[500px] flex flex-col p-0">
-            <Card className="bg-background">
-               <CardHeader>
-                  <CardTitle>Вхід</CardTitle>
-                  <CardDescription>Увійдіть на сайт, щоб мати змогу робити запити та допомагати.</CardDescription>
-               </CardHeader>
-               <CardContent>
-                  <LoginForm form={form} onSubmit={onSubmit} />
-               </CardContent>
-               <CardFooter className="grid">
-                  {isLoading ? (
-                     <ButtonLoading />
-                  ) : (
-                     <Button form="login-form" type="submit" className="w-full">
-                        Увійти
-                     </Button>
-                  )}
-                  <Button
-                     variant="link"
-                     className="mx-auto"
-                     onClick={() => {
-                        dispatch(toggleLoginModal());
-                        dispatch(toggleRegisterModal());
-                     }}
-                  >
-                     Зареєструватись
-                  </Button>
-               </CardFooter>
-            </Card>
+            поможи
          </DialogContent>
          <Toaster />
       </Dialog>

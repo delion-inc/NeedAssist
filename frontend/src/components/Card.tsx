@@ -21,7 +21,7 @@ const Card = ({ title, description, id, createdAt, city, user, priority }: IRequ
             </CardHeader> 
             <CardFooter className="flex items-center justify-between">
                <InfoModal />
-               <Button>Допомогти</Button>
+               {/* <Button>Допомогти</Button> */}
                <p className="text-muted-foreground">{formatDate(createdAt)}</p>
             </CardFooter>
          </CardWrapper>
