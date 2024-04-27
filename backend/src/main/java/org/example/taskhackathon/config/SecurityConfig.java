@@ -54,6 +54,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authorizeRequests ->
                         authorizeRequests
                                 .requestMatchers("/api/user/**").permitAll()
+                                .requestMatchers("/api/request/get-all-requests").permitAll()
+                                .requestMatchers("/api/request/get-all-proposes").permitAll()
                                 .requestMatchers("/api/request/**").hasAnyRole("HELPER", "RECIPIENT")
                 )
                 .sessionManagement(c -> c.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
