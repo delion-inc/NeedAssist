@@ -3,20 +3,18 @@ import { CardDescription, CardFooter, CardHeader, CardTitle, Card as CardWrapper
 import { IRequest } from "@/types/request.interface";
 import convertPriority from "@/utils/convertPriority";
 import formatDate from "@/utils/formatDate";
-import { Dialog, DialogContent, DialogTrigger } from "@/app/styles/ui/dialog";
+import { Dialog, DialogTrigger } from "@/app/styles/ui/dialog";
 import { Button } from "@/app/styles/ui/button";
-// import { toggleInfoModal } from "@/app/redux/slices/modalSlice";
-// import { selectOpenInfo } from "@/app/redux/selectors";
-// import { useAppDispatch, useAppSelector } from "@/app/redux/store";
+import InfoModal from "./InfoModal"; 
+import { useState } from "react";
 
-const Card = ({ title, description, id, createdAt, city, user, priority }: IRequest) => {
-   // const dispatch = useAppDispatch();
-   // const open = useAppSelector(selectOpenInfo); 
+const Card = ({ title, description, id, createdAt, city, user, priority }: IRequest) => { 
+   const [isModalOpen, setIsModalOpen] = useState(false);
 
    return (
       <>
          <Dialog>
-            <CardWrapper key={id}>
+            <CardWrapper>
                <CardHeader>
                   <CardTitle className="flex items-center justify-between">
                      <span>{title}</span> <Badge className="font-light">{convertPriority(priority)}</Badge>
@@ -30,9 +28,9 @@ const Card = ({ title, description, id, createdAt, city, user, priority }: IRequ
                </CardHeader>
                <CardFooter className="flex items-center justify-between">
                   <DialogTrigger asChild>
-                     <Button>Допомога</Button>
+                     <Button onClick={() => setIsModalOpen(true)}>Допомога</Button>
                   </DialogTrigger>
-                  <DialogContent className="sm:max-w-[500px] flex flex-col p-0">Поможи</DialogContent>
+                  {isModalOpen && <InfoModal id={id} />}
                   {/* <Button>Допомогти</Button> */}
                   <p className="text-muted-foreground">{formatDate(createdAt)}</p>
                </CardFooter>

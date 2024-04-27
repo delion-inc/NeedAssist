@@ -7,7 +7,11 @@ export const registerSlice = api.injectEndpoints({
          // query: () => "/api/request/get-all-requests",
          query: () => "/requests",
       }),
+      getRequest: builder.query<IRequest, number>({
+         // query: () => `/api/request/get/{id}`,
+         query: (id) => `/requests/${id}`,
+      }),
    }),
 });
 
-export const { useGetAllRequestsQuery } = registerSlice;
+export const { useGetAllRequestsQuery, useGetRequestQuery } = registerSlice;
