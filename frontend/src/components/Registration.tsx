@@ -3,7 +3,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Dialog, DialogContent, DialogTrigger } from "@/app/styles/ui/dialog";
 import { RegisterSchema } from "@/utils/schema";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
+import { UseFormReturn, useForm } from "react-hook-form";
 import { z } from "zod";
 import RegistrationForm from "./RegistrationForm";
 import { RegisterFormData } from "@/types/auth.interface";
@@ -15,7 +15,7 @@ import { toast } from "sonner"
 
 
 const Registration = () => {
-   const form = useForm<RegisterFormData>({
+   const form: UseFormReturn<RegisterFormData> = useForm<RegisterFormData>({
       resolver: zodResolver(RegisterSchema),
       defaultValues: {
          name: "",
@@ -24,6 +24,7 @@ const Registration = () => {
          phone: "",
          password: "",
          confirmPassword: "",
+         role: "",
       },
    });
 
@@ -33,7 +34,7 @@ const Registration = () => {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { confirmPassword, ...dataToSend } = data;
       try {
-         await register(dataToSend).unwrap();
+         await register(dataToSend as Partial<RegisterFormData>).unwrap();
          // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } catch (err: any) {
          if (!err?.originalStatus) {
