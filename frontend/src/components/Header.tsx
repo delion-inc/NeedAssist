@@ -1,5 +1,6 @@
 import { Button } from "@/app/styles/ui/button";
 import Registration from "./Registration"; 
+import Login from "./Login";
 
 const Header = () => { 
    
@@ -17,6 +18,9 @@ const Header = () => {
                   </li>
                   <li>
                      <Registration/>
+                  </li>
+                  <li>
+                     <Login/>
                   </li>
                </ul> 
          </nav>

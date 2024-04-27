@@ -3,7 +3,7 @@ import { IAuthResponse } from "@/types/auth.interface";
 
 export const refreshSlice = authApi.injectEndpoints({
    endpoints: (builder) => ({ 
-      refresh: builder.mutation<void, IAuthResponse>({
+      refresh: builder.mutation<IAuthResponse, void>({
          query: () => ({
             url: "/api/user/refresh",
             method: "POST",
