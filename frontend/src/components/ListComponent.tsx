@@ -1,6 +1,7 @@
-import { useGetAllRequestsQuery, useGetAllProposesQuery } from "@/api/endpoints/request.api";
+import { useGetAllRequestsQuery } from "@/api/endpoints/request.api";
 import Card from "./Card"; 
 import { Loader2 } from "lucide-react";
+import { useGetAllProposesQuery } from "@/api/endpoints/propose.api";
 
 type ListType = "requests" | "proposes";
 
