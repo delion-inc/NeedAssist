@@ -1,45 +1,38 @@
 import { Button } from "@/app/styles/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/app/styles/ui/card";
 import { Dialog, DialogContent, DialogTrigger } from "@/app/styles/ui/dialog";
-import { RegisterSchema } from "@/utils/schema";
+import { LoginFormData } from "@/types/auth.interface";
+import { LoginSchema } from "@/utils/schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { UseFormReturn, useForm } from "react-hook-form";
-import { z } from "zod";
-import RegistrationForm from "./RegistrationForm";
-import { RegisterFormData } from "@/types/auth.interface";
-import { useRegisterMutation } from "@/api";
-import { ButtonLoading } from "./ButtonLoading";
-import { Toaster } from "@/app/styles/ui/sonner";
-import { toast } from "sonner";
-import { useAppDispatch, useAppSelector } from "@/app/redux/store";
+import LoginForm from "./LoginForm";
 import { toggleLoginModal, toggleRegisterModal } from "@/app/redux/slices/modalSlice";
-import { selectOpenRegister } from "@/app/redux/selectors";
+import { useAppDispatch, useAppSelector } from "@/app/redux/store";
+import { selectOpenLogin } from "@/app/redux/selectors";
+import { ButtonLoading } from "./ButtonLoading";
+import { useLoginMutation } from "@/api";
+import { z } from "zod";
+import { toast } from "sonner";
+import { Toaster } from "@/app/styles/ui/sonner";
 
-const Registration = () => {
-   const form: UseFormReturn<RegisterFormData> = useForm<RegisterFormData>({
-      resolver: zodResolver(RegisterSchema),
+const Login = () => {
+   const form: UseFormReturn<LoginFormData> = useForm<LoginFormData>({
+      resolver: zodResolver(LoginSchema),
       defaultValues: {
-         name: "",
-         surname: "",
          email: "",
-         phone: "",
          password: "",
-         confirmPassword: "",
-         role: "",
       },
    });
 
    const dispatch = useAppDispatch();
-   const open = useAppSelector(selectOpenRegister);
-   const [register, { isLoading }] = useRegisterMutation();
+   const open = useAppSelector(selectOpenLogin);
 
-   async function onSubmit(data: z.infer<typeof RegisterSchema>) {
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const { confirmPassword, ...dataToSend } = data;
+   const [login, { isLoading }] = useLoginMutation();
+
+   async function onSubmit(data: z.infer<typeof LoginSchema>) {
       try {
-         await register(dataToSend as Partial<RegisterFormData>).unwrap();
+         await login(data).unwrap();
          toast("Реєстрація виконана успішно");
-         dispatch(toggleRegisterModal());
          dispatch(toggleLoginModal());
          // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } catch (err: any) {
@@ -56,36 +49,36 @@ const Registration = () => {
    }
 
    return (
-      <Dialog open={open} onOpenChange={() => dispatch(toggleRegisterModal())}>
+      <Dialog open={open} onOpenChange={() => dispatch(toggleLoginModal())}>
          <DialogTrigger asChild>
-            <Button>Зареєструватись</Button>
+            <Button>Увійти</Button>
          </DialogTrigger>
          <DialogContent className="sm:max-w-[500px] flex flex-col p-0">
             <Card className="bg-background">
                <CardHeader>
-                  <CardTitle>Реєстрація</CardTitle>
-                  <CardDescription>Зареєструйтесь на сайті, щоб мати змогу робити запити та допомагати.</CardDescription>
+                  <CardTitle>Вхід</CardTitle>
+                  <CardDescription>Увійдіть на сайт, щоб мати змогу робити запити та допомагати.</CardDescription>
                </CardHeader>
                <CardContent>
-                  <RegistrationForm form={form} onSubmit={onSubmit} />
+                  <LoginForm form={form} onSubmit={onSubmit} />
                </CardContent>
                <CardFooter className="grid">
                   {isLoading ? (
                      <ButtonLoading />
                   ) : (
-                     <Button form="register-form" type="submit" className="w-full">
-                        Зареєструватись
+                     <Button form="login-form" type="submit" className="w-full">
+                        Увійти
                      </Button>
                   )}
                   <Button
                      variant="link"
                      className="mx-auto"
                      onClick={() => {
-                        dispatch(toggleRegisterModal());
                         dispatch(toggleLoginModal());
+                        dispatch(toggleRegisterModal());
                      }}
                   >
-                     Увійти
+                     Зареєструватись
                   </Button>
                </CardFooter>
             </Card>
@@ -95,4 +88,4 @@ const Registration = () => {
    );
 };
 
-export default Registration;
+export default Login;

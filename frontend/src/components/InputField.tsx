@@ -1,18 +1,17 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/app/styles/ui/form";
 import { Input } from "@/app/styles/ui/input";
-import { RegisterFormData } from "@/types/auth.interface";
-import { Control, Path } from "react-hook-form";
+import { Control, FieldValues, Path } from "react-hook-form";
 
-type InputFieldProps = {
-   control: Control<RegisterFormData>;
-   name: Path<RegisterFormData>;
+type InputFieldProps<T extends FieldValues> = {
+   control: Control<T>;
+   name: Path<T>;
    label: string;
    type: string;
    placeholder: string;
 };
 
-const InputField: React.FC<InputFieldProps> = ({ control, name, label, type, placeholder }) => (
+const InputField = <T extends FieldValues>({ control, name, label, type, placeholder }: InputFieldProps<T>) => (
    <FormField
       control={control}
       name={name}

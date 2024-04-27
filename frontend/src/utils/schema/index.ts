@@ -21,10 +21,10 @@ export const RegisterSchema = z
          message: "Введіть коректний номер телефону"
       }),
       password: z.string().min(6, {
-         message: "Пароль має складатись мінімум із 6 символів"
+         message: "Пароль повинен містити щонайменше 6 символів"
       }),
       confirmPassword: z.string().min(6, {
-         message: "Пароль має складатись мінімум із 6 символів" 
+         message: "Пароль повинен містити щонайменше 6 символів" 
       }),
       role: z.string().refine(value => value === '2001' || value === '5320', {
          message: "Будь ласка, оберіть роль"
@@ -33,4 +33,9 @@ export const RegisterSchema = z
    .refine((data) => data.password === data.confirmPassword, {
       message: "Паролі не співпадають",
       path: ["confirmPassword"],
-   });
+   }); 
+
+export const LoginSchema = z.object({
+   email: z.string().email({ message: 'Введіть дійсну адресу електронної пошти' }),
+   password: z.string().min(6, { message: 'Пароль повинен містити щонайменше 8 символів' }),
+});
