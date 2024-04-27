@@ -43,7 +43,7 @@ const Login = () => {
          } else if (err.originalStatus === 400) {
             toast("Будь ласка, заповніть всі поля");
          } else if (err.originalStatus === 401) {
-            toast("Такий користувач вже зареєстрований");
+            toast("Неправильний логін або пароль");
          } else {
             toast("Виникла помилка( Спробуйте пізніше");
          }

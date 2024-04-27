@@ -1,18 +1,21 @@
 import { Button } from "@/app/styles/ui/button";
 import Registration from "./Registration";
 import Login from "./Login";
-import { useAppSelector } from "@/app/redux/store";
+import { useAppDispatch, useAppSelector } from "@/app/redux/store";
 import { selectCurrentToken } from "@/app/redux/selectors";
 import { LogOut } from "lucide-react";
 import { useLogoutMutation } from "@/api";
+import { setCredentials } from "@/app/redux/slices/authSlice";
 
 const Header = () => {
    const auth = useAppSelector(selectCurrentToken);
    const [logout] = useLogoutMutation();
+   const dispatch = useAppDispatch();
 
    async function onExit() {
       try {
          await logout().unwrap();
+         dispatch(setCredentials({ roles: [], accessToken: null }));
       } catch (error) {
          console.error(error);
       }
