@@ -1,6 +1,6 @@
-import authApi from "@/api/authApi";
+import api from "@/api/baseApi";
 
-export const logoutSlice = authApi.injectEndpoints({
+export const logoutSlice = api.injectEndpoints({
    endpoints: (builder) => ({
       logout: builder.mutation<void, void>({
          query: () => ({
