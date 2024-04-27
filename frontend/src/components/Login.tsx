@@ -14,8 +14,9 @@ import { useLoginMutation } from "@/api";
 import { z } from "zod";
 import { toast } from "sonner";
 import { Toaster } from "@/app/styles/ui/sonner";
+import { setCredentials } from "@/app/redux/slices/authSlice"; 
 
-const Login = () => {
+const Login = () => { 
    const form: UseFormReturn<LoginFormData> = useForm<LoginFormData>({
       resolver: zodResolver(LoginSchema),
       defaultValues: {
@@ -31,7 +32,8 @@ const Login = () => {
 
    async function onSubmit(data: z.infer<typeof LoginSchema>) {
       try {
-         await login(data).unwrap();
+         const userData = await login(data).unwrap();
+         dispatch(setCredentials({ ...userData })); 
          toast("Реєстрація виконана успішно");
          dispatch(toggleLoginModal());
          // eslint-disable-next-line @typescript-eslint/no-explicit-any

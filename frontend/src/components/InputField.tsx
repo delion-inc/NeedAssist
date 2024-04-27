@@ -8,7 +8,7 @@ type InputFieldProps<T extends FieldValues> = {
    name: Path<T>;
    label: string;
    type: string;
-   placeholder: string;
+   placeholder: string; 
 };
 
 const InputField = <T extends FieldValues>({ control, name, label, type, placeholder }: InputFieldProps<T>) => (
