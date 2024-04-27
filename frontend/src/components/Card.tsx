@@ -5,11 +5,24 @@ import convertPriority from "@/utils/convertPriority";
 import formatDate from "@/utils/formatDate";
 import { Dialog, DialogTrigger } from "@/app/styles/ui/dialog";
 import { Button } from "@/app/styles/ui/button";
-import InfoModal from "./InfoModal"; 
+import InfoModal from "./InfoModal";
 import { useState } from "react";
+import { useAppDispatch, useAppSelector } from "@/app/redux/store";
+import { selectCurrentToken } from "@/app/redux/selectors";
+import { toggleLoginModal } from "@/app/redux/slices/modalSlice";
 
-const Card = ({ title, description, id, createdAt, city, user, priority }: IRequest) => { 
+const Card = ({ title, description, id, createdAt, city, user, priority }: IRequest) => {
    const [isModalOpen, setIsModalOpen] = useState(false);
+   const auth = useAppSelector(selectCurrentToken);
+   const dispatch = useAppDispatch();
+
+   function onHelpClick() {
+      if (!auth) {
+         dispatch(toggleLoginModal());
+      } else {
+         setIsModalOpen(true);
+      }
+   }
 
    return (
       <>
@@ -28,7 +41,7 @@ const Card = ({ title, description, id, createdAt, city, user, priority }: IRequ
                </CardHeader>
                <CardFooter className="flex items-center justify-between">
                   <DialogTrigger asChild>
-                     <Button onClick={() => setIsModalOpen(true)}>Допомога</Button>
+                     <Button onClick={onHelpClick}>Допомога</Button>
                   </DialogTrigger>
                   {isModalOpen && <InfoModal id={id} />}
                   {/* <Button>Допомогти</Button> */}
