@@ -1,24 +1,25 @@
+import { Badge } from "@/app/styles/ui/badge";
 import { Button } from "@/app/styles/ui/button";
-import { CardContent, CardDescription, CardFooter, CardHeader, CardTitle, Card as CardWrapper } from "@/app/styles/ui/card";
+import { CardDescription, CardFooter, CardHeader, CardTitle, Card as CardWrapper } from "@/app/styles/ui/card";
 import { IRequest } from "@/types/request.interface";
+import convertPriority from "@/utils/convertPriority";
+import formatDate from "@/utils/formatDate";
 
-const Card = ({title, description, id, createdAt, city, user, priority}: IRequest) => {
+const Card = ({ title, description, id, createdAt, city, user, priority }: IRequest) => {
    return (
       <CardWrapper key={id}>
          <CardHeader>
-            <CardTitle>{title}</CardTitle>
-            <CardDescription>{description}</CardDescription>
-         </CardHeader>
-         <CardContent>
-            <p>{createdAt}</p>
-            <p>{city}</p>
-            <p>{user.email}</p>
-            <p>{user.name}</p>
-            <p>{user.surname}</p>
-         </CardContent>
-         <CardFooter className="space-between">
+            <CardTitle className="flex items-center justify-between"><span>{title}</span> <Badge className="font-light">{convertPriority(priority)}</Badge></CardTitle>
+            <CardDescription className="max-w-[750px]">
+               {description} <br />
+               <p className="text-muted-foreground mt-2">
+                  {user.name} {user.surname}, {city}
+               </p>
+            </CardDescription>
+         </CardHeader> 
+         <CardFooter className="flex items-center justify-between">
             <Button>Допомогти</Button>
-            <p>{priority}</p>
+            <p className="text-muted-foreground">{formatDate(createdAt)}</p>
          </CardFooter>
       </CardWrapper>
    );

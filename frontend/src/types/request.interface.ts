@@ -9,7 +9,7 @@ export interface IRequest {
    user: User;
 }
 
-type PriorityType = "LOW" | "MEDIUM" | "HIGH";
+export type PriorityType = "LOW" | "MEDIUM" | "HIGH";
 
 interface User {
    name: string;
