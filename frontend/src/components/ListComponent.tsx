@@ -21,7 +21,7 @@ const ListComponent: React.FC<ListComponentProps> = ({ type }) => {
             <Loader2 color="#176B87" className="absolute top-[45%] left-[49%] h-10 w-10 animate-spin" /> 
          ) : (
             data?.map((item) => (
-               <Card {...item} />
+               <Card key={item.id} {...item} />
             )) 
          )}
       </section>
