@@ -25,6 +25,9 @@ export const RegisterSchema = z
       }),
       confirmPassword: z.string().min(6, {
          message: "Пароль має складатись мінімум із 6 символів" 
+      }),
+      role: z.string().refine(value => value === '2001' || value === '5320', {
+         message: "Будь ласка, оберіть роль"
       })
    })
    .refine((data) => data.password === data.confirmPassword, {

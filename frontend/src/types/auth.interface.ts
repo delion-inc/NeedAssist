@@ -15,4 +15,5 @@ export type RegisterFormData = {
    phone: string;
    password: string;
    confirmPassword: string;
+   role: "2001" | "5320" | "";
 }; 

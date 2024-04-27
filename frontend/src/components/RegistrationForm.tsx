@@ -1,9 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Form } from "@/app/styles/ui/form";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/app/styles/ui/form";
 import { FC } from "react";
 import { SubmitHandler, UseFormReturn } from "react-hook-form";
 import InputField from "./InputField";
 import { RegisterFormData } from "@/types/auth.interface";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/app/styles/ui/select";
 
 type RegistrationFormProps = {
    form: UseFormReturn<RegisterFormData>;
@@ -41,6 +42,27 @@ const RegistrationForm: FC<RegistrationFormProps> = ({ form, onSubmit }) => (
                <div>
                   <InputField control={form.control} name="confirmPassword" label="Підтвердити пароль" type="password" placeholder="Введіть пароль" />
                </div>
+               <FormField
+                  control={form.control}
+                  name="role"
+                  render={({ field }) => (
+                     <FormItem>
+                        <FormLabel>Роль</FormLabel>
+                        <Select onValueChange={field.onChange} defaultValue={String(field.value)}>
+                           <FormControl>
+                              <SelectTrigger>
+                                 <SelectValue placeholder="Будь ласка, оберіть вашу роль." />
+                              </SelectTrigger>
+                           </FormControl>
+                           <SelectContent>
+                              <SelectItem value="2001">Волонтер</SelectItem>
+                              <SelectItem value="5320">Потребуючий</SelectItem>
+                           </SelectContent>
+                        </Select> 
+                        <FormMessage />
+                     </FormItem>
+                  )}
+               />
             </div>
          </div>
       </form>
