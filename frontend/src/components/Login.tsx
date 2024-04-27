@@ -33,8 +33,8 @@ const Login = () => {
    async function onSubmit(data: z.infer<typeof LoginSchema>) {
       try {
          const userData = await login(data).unwrap();
+         // const userData = {accessToken: '1', roles: 2001}
          dispatch(setCredentials({ ...userData })); 
-         toast("Реєстрація виконана успішно");
          dispatch(toggleLoginModal());
          // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } catch (err: any) {
