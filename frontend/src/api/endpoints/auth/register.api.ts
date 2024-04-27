@@ -1,7 +1,7 @@
 import { RegisterFormData } from "@/types/auth.interface";
-import authApi from "@/api/authApi";
+import api from "@/api/baseApi";
 
-export const registerSlice = authApi.injectEndpoints({
+export const registerSlice = api.injectEndpoints({
    endpoints: (builder) => ({
       register: builder.mutation<void, Partial<RegisterFormData>>({
          query: (credentials) => ({

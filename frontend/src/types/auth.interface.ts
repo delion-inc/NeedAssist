@@ -1,4 +1,4 @@
-export interface IAuthCredentials {
+export interface LoginFormData {
    email: string;
    password: string;
 }
@@ -15,4 +15,5 @@ export type RegisterFormData = {
    phone: string;
    password: string;
    confirmPassword: string;
+   role: "2001" | "5320" | "";
 }; 

@@ -1,11 +1,10 @@
-import { IAuthCredentials, IAuthResponse } from "@/types/auth.interface";
-import authApi from "@/api/authApi"; 
+import { IAuthResponse, LoginFormData } from "@/types/auth.interface";
+import api from "@/api/baseApi";
 
-export const loginSlice = authApi.injectEndpoints({
+export const loginSlice = api.injectEndpoints({
    endpoints: (builder) => ({
-      login: builder.mutation<IAuthResponse, IAuthCredentials>({
+      login: builder.mutation<IAuthResponse, LoginFormData>({
          query: (credentials) => ({
-            // url: "/auth",
             url: "/api/user/authorization",
             method: "POST",
             body: { ...credentials },
