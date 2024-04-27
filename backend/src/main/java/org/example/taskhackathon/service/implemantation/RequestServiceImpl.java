@@ -80,16 +80,6 @@ public class RequestServiceImpl implements RequestService {
                 .build();
     }
 
-    @Override
-    public ResponseEntity<?> deleteRequest(Long id, String name) {
-        Request request = requestRepository.findById(id).orElseThrow(() -> new RuntimeException("Request not found"));
-        if (!request.getUser().getEmail().equals(name)) {
-            return new ResponseEntity<>("You can't delete this request", HttpStatus.FORBIDDEN);
-        }
-        requestRepository.delete(request);
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
-
     private User getUserByEmail(String email) {
         return userRepository.findByEmail(email);
     }

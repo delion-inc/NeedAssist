@@ -11,10 +11,5 @@ public interface RequestService {
 
     ResponseEntity<?> getRequestById(Long id);
 
-//    ResponseEntity<?> getAllRequest();
-//
-//    ResponseEntity<?> getAllPropose();
     ResponseEntity<?> getAll(String role);
-
-    ResponseEntity<?> deleteRequest(Long id, String name);
 }
