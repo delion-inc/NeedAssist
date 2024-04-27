@@ -2,10 +2,13 @@ import authApi from "@/api/authApi";
 
 export const logoutSlice = authApi.injectEndpoints({
    endpoints: (builder) => ({
-      logout: builder.query<void, void>({
-         query: () => "/api/user/logout",
+      logout: builder.mutation<void, void>({
+         query: () => ({
+            url: "/api/user/logout",
+            method: "POST",
+         }),
       }),
    }),
 });
 
-export const { useLogoutQuery } = logoutSlice;
+export const { useLogoutMutation } = logoutSlice;

@@ -1,4 +1,4 @@
-import { Outlet, useNavigate } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import { useEffect, useState } from "react";
 import useLocalStorage from "@/hooks/useLocalStorage";
 import { useSelector } from "react-redux";
@@ -14,7 +14,6 @@ const PersistLogin = () => {
    const [persist] = useLocalStorage("persist", false);
    const [refresh] = useRefreshMutation();
    const dispatch = useAppDispatch();
-   const navigate = useNavigate();
 
    useEffect(() => {
       let isMounted = true;
@@ -30,7 +29,7 @@ const PersistLogin = () => {
             );
          } catch (error) {
             console.error(error);
-            navigate("/login");
+            // navigate("/");
          } finally {
             isMounted && setIsLoading(false);
          }
@@ -44,8 +43,8 @@ const PersistLogin = () => {
    }, []);
 
    useEffect(() => {
-      console.log(`isLoading: ${isLoading}`);
-      console.log(`aT: ${JSON.stringify(token)}`);
+      // console.log(`isLoading: ${isLoading}`);
+      // console.log(`aT: ${JSON.stringify(token)}`);
       // eslint-disable-next-line react-hooks/exhaustive-deps
    }, [isLoading]);
    return <>{!persist ? <Outlet /> : isLoading ? <Loader2 color="#176B87" className="absolute top-[45%] left-[49%] h-10 w-10 animate-spin" /> : <Outlet />}</>;
