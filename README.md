@@ -1,12 +1,18 @@
 
 # NeedAssist
 NeedAssist is an online platform designed to centralize urgent requests from people seeking assistance. Whether it’s finding critical information, connecting with volunteers, or offering support, NeedAssist aims to bridge the gap between those in need and those willing to help.
+## Frontend
+NeedAssist is an online platform designed to centralize urgent requests from people seeking assistance. Whether it’s finding critical information, connecting with volunteers, or offering support, NeedAssist aims to bridge the gap between those in need and those willing to help.
+## Backend
+The backend of this project is built using Spring Boot & Spring Security for the application framework and PostgreSQL for the database management system. These technologies are used to handle various backend tasks such as data processing, business logic, set up security and data storage. The use of these technologies ensures a robust and efficient backend for the project.
 
-## **How to run**
-1. Move to project folder directory
-2. Open cmd and input 'docker-compose up' (you need run dekstop docker on your PC)
+# **How to run**
+1. Open your IDE and navigate to the directory where you want to clone the project.
+2. Open the command prompt from that directory and enter the following command 'git clone https://github.com/delion-inc/NeedAssist.git'
+3. Change your current directory to the project directory by entering 'cd NeedAssist' in the command prompt.
+4. Ensure Docker Desktop is running on your PC. Then, in the command prompt, enter 'docker-compose up' to start the project.
 
-## **API Documentation**
+# **API Documentation**
 
 ### **User Controller**
 ROLE_HELPER - 2001   
@@ -96,6 +102,7 @@ ROLE _RECIPIENT - 5320
         }
     }
     ```
+**Note:** These two request works without jwt token
 
 - **GET** `http://localhost:8080/api/request/get-all-requests` - Get all request for helper, you will get request only which were published by recipients
   - Response: List<RequestDTO>, 200, OK
@@ -138,8 +145,3 @@ ROLE _RECIPIENT - 5320
     }
   ]
     ```
-
-- **DELETE** `http://localhost:8080/api/request/delete/{ID}` - Delete user request, through JWT, we check whether this is really your request
-  - PathVariable, ID
-  - Response: 200, OK
-
