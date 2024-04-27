@@ -1,22 +1,38 @@
-import { Button } from "@/app/styles/ui/button";
-import { Dialog, DialogContent, DialogTrigger } from "@/app/styles/ui/dialog"; 
-import { toggleInfoModal } from "@/app/redux/slices/modalSlice";
-import { useAppDispatch, useAppSelector } from "@/app/redux/store";
-import { selectOpenInfo } from "@/app/redux/selectors";
+import { useGetRequestQuery } from "@/api/endpoints/request.api";
+import { Badge } from "@/app/styles/ui/badge";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/app/styles/ui/card";
+import { DialogContent } from "@/app/styles/ui/dialog";
+import convertPriority from "@/utils/convertPriority";
+import formatDate from "@/utils/formatDate";
 
-const InfoModal = () => {
-   const dispatch = useAppDispatch();
-   const open = useAppSelector(selectOpenInfo);
+const InfoModal = ({ id }: { id: number }) => {
+   const { data, isLoading } = useGetRequestQuery(id);
 
    return (
-      <Dialog open={open} onOpenChange={() => dispatch(toggleInfoModal())}>
-         <DialogTrigger asChild>
-            <Button>Допомога</Button>
-         </DialogTrigger>
-         <DialogContent className="sm:max-w-[500px] flex flex-col p-0">
-            Поможи
-         </DialogContent>
-      </Dialog>
+      <DialogContent className="sm:max-w-[500px] flex flex-col p-0">
+         {isLoading ? (
+            <p className="mx-auto my-[150px] ">Завантаження...</p>
+         ) : (
+            <Card key={id}>
+               <CardHeader >
+                  <CardTitle className="flex items-center justify-between">
+                     <span>{data?.title}</span>
+                  </CardTitle>
+                  <CardDescription className="max-w-[750px]">{data?.description}</CardDescription>
+               </CardHeader>
+               <CardContent>
+                  {data?.user.name} {data?.user.surname} <br />
+                  Місто: {data?.city} <br />
+                  Email: {data?.user.email} <br />
+                  Контактний номер телефону: {data?.user.phone}
+               </CardContent>
+               <CardFooter className="flex items-center justify-between">
+                  <p className="text-muted-foreground">{formatDate(data?.createdAt || "")}</p>
+                  <Badge className="font-light">{convertPriority(data?.priority || "LOW")}</Badge>
+               </CardFooter>
+            </Card>
+         )}
+      </DialogContent>
    );
 };
 

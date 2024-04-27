@@ -6,6 +6,7 @@ import { selectCurrentToken } from "@/app/redux/selectors";
 import { LogOut } from "lucide-react";
 import { useLogoutMutation } from "@/api";
 import { setCredentials } from "@/app/redux/slices/authSlice";
+import { toggleLoginModal } from "@/app/redux/slices/modalSlice";
 
 const Header = () => {
    const auth = useAppSelector(selectCurrentToken);
@@ -21,6 +22,14 @@ const Header = () => {
       }
    }
 
+   function onAddClick() {
+      if (!auth) {
+         dispatch(toggleLoginModal());
+      } else {
+         // відкриваєм модалку
+      }
+   }
+
    return (
       <header className="h-[100px] flex items-center justify-between container mx-auto xl:px-1">
          <div>
@@ -29,7 +38,7 @@ const Header = () => {
          <nav>
             <ul className="flex gap-x-5">
                <li>
-                  <Button className="text-primary" variant="outline">
+                  <Button onClick={onAddClick} className="text-primary" variant="outline">
                      Створити запит
                   </Button>
                </li>
