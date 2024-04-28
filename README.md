@@ -12,6 +12,7 @@ The backend of this project is built using Spring Boot & Spring Security for the
   ```git clone https://github.com/delion-inc/NeedAssist.git```
 3. Change your current directory to the project directory by entering ```cd NeedAssist``` in the command prompt.
 4. Ensure Docker Desktop is running on your PC. Then, in the command prompt, enter ```docker-compose up``` to start the project.
+5. Open ```http://localhost:4173``` in your browser.
 
 # **Technologies**
 - Frontend: React, TypeScript, Redux Toolkit, RTK Query, TailwindCSS
