@@ -1,4 +1,4 @@
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/app/styles/ui/tabs";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/app/styles";
 import ListComponent from "@/components/ListComponent";
 
 const Home = () => {

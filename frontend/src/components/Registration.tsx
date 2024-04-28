@@ -1,19 +1,26 @@
-import { Button } from "@/app/styles/ui/button";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/app/styles/ui/card";
-import { Dialog, DialogContent, DialogTrigger } from "@/app/styles/ui/dialog";
-import { RegisterSchema } from "@/utils/schema";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { UseFormReturn, useForm } from "react-hook-form";
-import { z } from "zod";
-import RegistrationForm from "./RegistrationForm";
+import { selectOpenRegister, toggleLoginModal, toggleRegisterModal, useAppDispatch, useAppSelector } from "@/app/redux";
+import RegistrationForm from "@/components/RegistrationForm";
 import { RegisterFormData } from "@/types/auth.interface";
-import { useRegisterMutation } from "@/api";
+import { UseFormReturn, useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { RegisterSchema } from "@/utils/schema";
 import { ButtonLoading } from "./ButtonLoading";
-import { Toaster } from "@/app/styles/ui/sonner";
+import { useRegisterMutation } from "@/api";
 import { toast } from "sonner";
-import { useAppDispatch, useAppSelector } from "@/app/redux/store";
-import { toggleLoginModal, toggleRegisterModal } from "@/app/redux/slices/modalSlice";
-import { selectOpenRegister } from "@/app/redux/selectors";
+import { z } from "zod";
+import {
+   Button,
+   Card,
+   CardContent,
+   CardDescription,
+   CardFooter,
+   CardHeader,
+   CardTitle,
+   Dialog,
+   DialogContent,
+   DialogTrigger,
+   Toaster,
+} from "@/app/styles";
 
 const Registration = () => {
    const form: UseFormReturn<RegisterFormData> = useForm<RegisterFormData>({
