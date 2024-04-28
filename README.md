@@ -9,9 +9,9 @@ The backend of this project is built using Spring Boot & Spring Security for the
 # **How to run**
 1. Open your IDE and navigate to the directory where you want to clone the project.
 2. Open the command prompt from that directory and enter the following command 
-  ```bash git clone https://github.com/delion-inc/NeedAssist.git```
-3. Change your current directory to the project directory by entering ```bash cd NeedAssist``` in the command prompt.
-4. Ensure Docker Desktop is running on your PC. Then, in the command prompt, enter ```bash docker-compose up``` to start the project.
+  ```git clone https://github.com/delion-inc/NeedAssist.git```
+3. Change your current directory to the project directory by entering ```cd NeedAssist``` in the command prompt.
+4. Ensure Docker Desktop is running on your PC. Then, in the command prompt, enter ```docker-compose up``` to start the project.
 
 # **Technologies**
 - Frontend: React, TypeScript, Redux Toolkit, RTK Query, TailwindCSS
