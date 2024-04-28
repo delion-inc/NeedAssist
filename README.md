@@ -21,7 +21,7 @@ The backend of this project is built using Spring Boot & Spring Security for the
 - Authentication: JSON Web Tokens (JWT)
 - Deployment: Docker
 
-- # **Guide**
+# **Guide**
 You have the choice to register as either a volunteer or a recipient. Every role can view all requests for help or donations, but
 If you register as a volunteer, you can only post offers for what you are willing to donate.
 If you register as a recipient, you can only post requests for help or items you need.
