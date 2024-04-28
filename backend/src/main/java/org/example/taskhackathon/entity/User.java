@@ -18,7 +18,7 @@ import java.util.List;
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
 
@@ -41,7 +41,7 @@ public class User {
     @JsonIgnore
     List<Request> requests;
 
-    @Column(name = "refresh-token")
+    @Column(name = "refresh_token")
     private String refreshToken;
 
     @Column(name = "user_role")

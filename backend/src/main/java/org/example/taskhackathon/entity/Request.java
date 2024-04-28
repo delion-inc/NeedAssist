@@ -15,7 +15,7 @@ import org.example.taskhackathon.entity.constant.Priority;
 @Table(name = "requests")
 public class Request {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
 
@@ -26,7 +26,9 @@ public class Request {
     String description;
 
     @Column(name = "priority", nullable = false)
+    @Enumerated(EnumType.ORDINAL)
     Priority priority;
+
 
     @Column(name = "created_at", nullable = false)
     String createdAt;

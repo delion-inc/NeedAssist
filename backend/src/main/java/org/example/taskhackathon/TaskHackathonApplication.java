@@ -9,5 +9,4 @@ public class TaskHackathonApplication {
     public static void main(String[] args) {
         SpringApplication.run(TaskHackathonApplication.class, args);
     }
-
 }
