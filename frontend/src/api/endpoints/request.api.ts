@@ -6,6 +6,7 @@ export const requestSlice = api.injectEndpoints({
       getAllRequests: builder.query<IRequest[], void>({
          // query: () => "/api/request/get-all-requests",
          query: () => "/requests",
+         providesTags: ['Request'],
       }),
       getRequest: builder.query<IRequest, number>({
          // query: (id) => `/api/request/get/${id}`,
@@ -18,6 +19,7 @@ export const requestSlice = api.injectEndpoints({
             method: "POST",
             body: { ...credentials },
          }),
+         invalidatesTags: ["Request"],
       }),
    }),
 });

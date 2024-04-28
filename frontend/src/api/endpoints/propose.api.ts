@@ -6,6 +6,7 @@ export const proposeSlice = api.injectEndpoints({
       getAllProposes: builder.query<IRequest[], void>({
          // query: () => "/api/request/get-all-proposes",
          query: () => "/proposes",
+         providesTags: ['Request'],
       }),
    }),
 });

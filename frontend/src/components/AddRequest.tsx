@@ -21,7 +21,7 @@ const AddRequest = () => {
          title: "",
          description: "",
          city: "",
-         priority: undefined,
+         priority: "",
       },
    });
 
@@ -37,11 +37,16 @@ const AddRequest = () => {
    const dispatch = useAppDispatch();
    const open = useAppSelector(selectOpenRequest);
    const [addRequest, { isLoading }] = useAddRequestMutation();
+   const buttonLabel = role.includes(2001) ? "Додати пропозицію" : "Додати запит";
+   const message = role.includes(2001)
+      ? "В увійшли як волонтер та можете додати пропозицію про допомогу іншим"
+      : "Ви увійшли як потребуючий та можете додати запит за допомогою";
 
    async function onSubmit(data: IAddRequest) {
+      console.log("submit");
+
       try {
          await addRequest(data).unwrap();
-         toast("додано");
          // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } catch (err: any) {
          if (!err?.originalStatus) {
@@ -58,12 +63,12 @@ const AddRequest = () => {
 
    return (
       <Dialog open={open} onOpenChange={() => dispatch(toggleRequestModal())}>
-         <Button onClick={onAddClick}>Додати запит</Button> 
+         <Button onClick={onAddClick}>{buttonLabel}</Button>
          <DialogContent className="sm:max-w-[500px] flex flex-col p-0">
             <Card className="bg-background">
                <CardHeader>
-                  <CardTitle>Додати запит</CardTitle>
-                  <CardDescription>Увійдіть на сайт, щоб мати змогу робити запити та допомагати.</CardDescription>
+                  <CardTitle>{buttonLabel}</CardTitle>
+                  <CardDescription>{message}</CardDescription>
                </CardHeader>
                <CardContent>
                   <AddRequestForm form={form} onSubmit={onSubmit} />
@@ -72,8 +77,8 @@ const AddRequest = () => {
                   {isLoading ? (
                      <ButtonLoading />
                   ) : (
-                     <Button form="login-form" type="submit" className="w-full">
-                        Увійти
+                     <Button onClick={() => onSubmit(form.getValues())} className="w-full">
+                        Опублікувати
                      </Button>
                   )}
                </CardFooter>
