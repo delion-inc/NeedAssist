@@ -1,6 +1,5 @@
 import { BaseQueryApi, BaseQueryFn, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { logOut, setCredentials } from "@/app/redux/slices/authSlice";
-import { RootState } from "@/app/redux/store"; 
+import { logOut, setCredentials, RootState } from "@/app/redux";
 
 export const baseQuery = fetchBaseQuery({
    baseUrl: import.meta.env.VITE_BASE_API_URL,

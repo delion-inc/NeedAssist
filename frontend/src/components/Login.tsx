@@ -1,22 +1,28 @@
-import { Button } from "@/app/styles/ui/button";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/app/styles/ui/card";
-import { Dialog, DialogContent, DialogTrigger } from "@/app/styles/ui/dialog";
-import { LoginFormData } from "@/types/auth.interface";
-import { LoginSchema } from "@/utils/schema";
-import { zodResolver } from "@hookform/resolvers/zod";
+import { selectOpenLogin, setCredentials, toggleLoginModal, toggleRegisterModal, useAppDispatch, useAppSelector } from "@/app/redux";
+import { ButtonLoading } from "@/components/ButtonLoading";
 import { UseFormReturn, useForm } from "react-hook-form";
-import LoginForm from "./LoginForm";
-import { toggleLoginModal, toggleRegisterModal } from "@/app/redux/slices/modalSlice";
-import { useAppDispatch, useAppSelector } from "@/app/redux/store";
-import { selectOpenLogin } from "@/app/redux/selectors";
-import { ButtonLoading } from "./ButtonLoading";
+import { LoginFormData } from "@/types/auth.interface";
+import { zodResolver } from "@hookform/resolvers/zod";
+import LoginForm from "@/components/LoginForm";
+import { LoginSchema } from "@/utils/schema";
 import { useLoginMutation } from "@/api";
-import { z } from "zod";
 import { toast } from "sonner";
-import { Toaster } from "@/app/styles/ui/sonner";
-import { setCredentials } from "@/app/redux/slices/authSlice"; 
+import { z } from "zod";
+import {
+   Button,
+   Card,
+   CardContent,
+   CardDescription,
+   CardFooter,
+   CardHeader,
+   CardTitle,
+   Dialog,
+   DialogContent,
+   DialogTrigger,
+   Toaster,
+} from "@/app/styles";
 
-const Login = () => { 
+const Login = () => {
    const form: UseFormReturn<LoginFormData> = useForm<LoginFormData>({
       resolver: zodResolver(LoginSchema),
       defaultValues: {
@@ -33,8 +39,7 @@ const Login = () => {
    async function onSubmit(data: z.infer<typeof LoginSchema>) {
       try {
          const userData = await login(data).unwrap();
-         // const userData = {accessToken: '1', roles: [2001]}
-         dispatch(setCredentials({ ...userData })); 
+         dispatch(setCredentials({ ...userData }));
          dispatch(toggleLoginModal());
          // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } catch (err: any) {

@@ -1,9 +1,20 @@
 import { SubmitHandler, UseFormReturn } from "react-hook-form";
-import InputField from "./InputField";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/app/styles/ui/form";
 import { IAddRequest } from "@/types/request.interface";
-import { Textarea } from "@/app/styles/ui/textarea";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/app/styles/ui/select";
+import InputField from "@/components/InputField";
+import {
+   Form,
+   FormControl,
+   FormField,
+   FormItem,
+   FormLabel,
+   FormMessage,
+   Select,
+   SelectContent,
+   SelectItem,
+   SelectTrigger,
+   SelectValue,
+   Textarea,
+} from "@/app/styles";
 
 type LoginFormProps = {
    form: UseFormReturn<IAddRequest>;
@@ -33,7 +44,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ form, onSubmit }) => {
                            <FormItem>
                               <FormLabel>Опис</FormLabel>
                               <FormControl>
-                                 <Textarea 
+                                 <Textarea
                                     className="transition max-h-[250px]"
                                     value={field.value}
                                     onChange={field.onChange}

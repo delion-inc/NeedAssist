@@ -1,9 +1,7 @@
-import { useGetRequestQuery } from "@/api/endpoints/request.api";
-import { Badge } from "@/app/styles/ui/badge";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/app/styles/ui/card";
-import { DialogContent } from "@/app/styles/ui/dialog";
+import { Badge, Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle, DialogContent } from "@/app/styles";
 import convertPriority from "@/utils/convertPriority";
 import formatDate from "@/utils/formatDate";
+import { useGetRequestQuery } from "@/api";
 
 const InfoModal = ({ id }: { id: number }) => {
    const { data, isLoading } = useGetRequestQuery(id);
@@ -14,7 +12,7 @@ const InfoModal = ({ id }: { id: number }) => {
             <p className="mx-auto my-[150px] ">Завантаження...</p>
          ) : (
             <Card key={id}>
-               <CardHeader >
+               <CardHeader>
                   <CardTitle className="flex items-center justify-between">
                      <span>{data?.title}</span>
                   </CardTitle>

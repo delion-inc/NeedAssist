@@ -1,6 +1,6 @@
 import { Provider } from "react-redux";
 import { BrowserRouter, Routes } from "react-router-dom";
-import { store } from "./redux/store";
+import { store } from "@/app/redux"; 
 
 interface ProvidersProps {
    children: React.ReactNode;

@@ -1,10 +1,21 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/app/styles/ui/form";
-import { FC } from "react";
 import { SubmitHandler, UseFormReturn } from "react-hook-form";
-import InputField from "./InputField";
 import { RegisterFormData } from "@/types/auth.interface";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/app/styles/ui/select";
+import InputField from "@/components/InputField";
+import { FC } from "react";
+import {
+   Form,
+   FormControl,
+   FormField,
+   FormItem,
+   FormLabel,
+   FormMessage,
+   Select,
+   SelectContent,
+   SelectItem,
+   SelectTrigger,
+   SelectValue,
+} from "@/app/styles";
 
 type RegistrationFormProps = {
    form: UseFormReturn<RegisterFormData>;

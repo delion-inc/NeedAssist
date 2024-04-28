@@ -1,4 +1,4 @@
-import { RootState } from "@/app/redux/store";
+import { RootState } from "@/app/redux";
 
 export const selectCurrentToken = (state: RootState) => state.auth.accessToken;
 export const selectOpenLogin = (state: RootState) => state.modal.openLoginModal;

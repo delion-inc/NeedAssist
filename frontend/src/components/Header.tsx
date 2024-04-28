@@ -1,12 +1,10 @@
-import { Button } from "@/app/styles/ui/button";
-import Registration from "./Registration";
-import Login from "./Login";
-import { useAppDispatch, useAppSelector } from "@/app/redux/store";
-import { selectCurrentToken } from "@/app/redux/selectors";
-import { LogOut } from "lucide-react";
+import { selectCurrentToken, setCredentials, useAppDispatch, useAppSelector } from "@/app/redux";
+import Registration from "@/components/Registration";
+import AddRequest from "@/components/AddRequest";
 import { useLogoutMutation } from "@/api";
-import { setCredentials } from "@/app/redux/slices/authSlice";
-import AddRequest from "./AddRequest";
+import Login from "@/components/Login";
+import { Button } from "@/app/styles";
+import { LogOut } from "lucide-react";
 
 const Header = () => {
    const auth = useAppSelector(selectCurrentToken);
@@ -20,7 +18,7 @@ const Header = () => {
       } catch (error) {
          console.error(error);
       }
-   } 
+   }
 
    return (
       <header className="h-[100px] flex items-center justify-between container mx-auto xl:px-1">
