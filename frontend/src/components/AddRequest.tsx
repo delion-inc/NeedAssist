@@ -47,6 +47,8 @@ const AddRequest = () => {
 
       try {
          await addRequest(data).unwrap();
+         toast("Успішно опубліковано"); 
+         dispatch(toggleRequestModal());
          // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } catch (err: any) {
          if (!err?.originalStatus) {
