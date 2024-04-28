@@ -11,7 +11,7 @@ export interface IRequest {
 
 export type PriorityType = "LOW" | "MEDIUM" | "HIGH" | "";
 
-interface User {
+export interface User {
    name: string;
    surname: string;
    email: string;
