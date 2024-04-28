@@ -2,15 +2,23 @@
 # NeedAssist
 NeedAssist is an online platform designed to centralize urgent requests from people seeking assistance. Whether it’s finding critical information, connecting with volunteers, or offering support, NeedAssist aims to bridge the gap between those in need and those willing to help.
 ## Frontend
-NeedAssist is an online platform designed to centralize urgent requests from people seeking assistance. Whether it’s finding critical information, connecting with volunteers, or offering support, NeedAssist aims to bridge the gap between those in need and those willing to help.
+The frontend of this project is constructed using React in conjunction with TypeScript. RTK Query is employed for handling data fetching and caching, while Redux is utilized for managing authentication states, such as user roles and access tokens. For the visual aspect, a modern and flexible library, shadcn/ui, is used, which is further customized with Tailwind CSS to provide a unique and responsive user interface.
 ## Backend
 The backend of this project is built using Spring Boot & Spring Security for the application framework and PostgreSQL for the database management system. These technologies are used to handle various backend tasks such as data processing, business logic, set up security and data storage. The use of these technologies ensures a robust and efficient backend for the project.
 
 # **How to run**
 1. Open your IDE and navigate to the directory where you want to clone the project.
-2. Open the command prompt from that directory and enter the following command 'git clone https://github.com/delion-inc/NeedAssist.git'
-3. Change your current directory to the project directory by entering 'cd NeedAssist' in the command prompt.
-4. Ensure Docker Desktop is running on your PC. Then, in the command prompt, enter 'docker-compose up' to start the project.
+2. Open the command prompt from that directory and enter the following command 
+  ```bash git clone https://github.com/delion-inc/NeedAssist.git```
+3. Change your current directory to the project directory by entering ```bash cd NeedAssist``` in the command prompt.
+4. Ensure Docker Desktop is running on your PC. Then, in the command prompt, enter ```bash docker-compose up``` to start the project.
+
+# **Technologies**
+- Frontend: React, TypeScript, Redux Toolkit, RTK Query, TailwindCSS
+- Backend: Java, Spring Boot, Spring Security
+- Database: PostgreSQL
+- Authentication: JSON Web Tokens (JWT)
+- Deployment: Docker
 
 # **API Documentation**
 
