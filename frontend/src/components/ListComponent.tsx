@@ -20,7 +20,7 @@ const ListComponent: React.FC<ListComponentProps> = ({ type }) => {
          {isLoading ? ( 
             <Loader2 color="#176B87" className="absolute top-[45%] left-[49%] h-10 w-10 animate-spin" /> 
          ) : (
-            data?.map((item) => (
+            data?.slice().reverse().map((item) => (
                <Card key={item.id} {...item} type={type} />
             )) 
          )}
