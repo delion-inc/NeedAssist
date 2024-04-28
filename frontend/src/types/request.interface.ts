@@ -16,4 +16,11 @@ interface User {
    surname: string;
    email: string;
    phone: string;
+} 
+
+export interface IAddRequest {
+   title: string;
+   description: string;
+   city: string;
+   priority: PriorityType;
 }
