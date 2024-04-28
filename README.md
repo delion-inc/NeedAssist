@@ -15,7 +15,7 @@ The backend of this project is built using Spring Boot & Spring Security for the
 
 # **Technologies**
 - Frontend: React, TypeScript, Redux Toolkit, RTK Query, TailwindCSS
-- Backend: Java, Spring Boot, Spring Security
+- Backend: Java, Spring Boot, Spring Security, Lombok
 - Database: PostgreSQL
 - Authentication: JSON Web Tokens (JWT)
 - Deployment: Docker
