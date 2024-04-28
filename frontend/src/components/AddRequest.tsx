@@ -61,7 +61,7 @@ const AddRequest = () => {
 
    return (
       <Dialog open={open} onOpenChange={() => dispatch(toggleRequestModal())}>
-         <Button onClick={onAddClick}>{buttonLabel}</Button>
+         <Button variant="outline" onClick={onAddClick}>{buttonLabel}</Button>
          <DialogContent className="sm:max-w-[500px] flex flex-col p-0">
             <Card className="bg-background">
                <CardHeader>
