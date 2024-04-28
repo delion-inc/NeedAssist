@@ -1,5 +1,5 @@
-import { IAuthResponse, LoginFormData } from "@/types/auth.interface";
 import api from "@/api/baseApi";
+import { IAuthResponse, LoginFormData } from "@/types/auth.interface";
 
 export const loginSlice = api.injectEndpoints({
    endpoints: (builder) => ({

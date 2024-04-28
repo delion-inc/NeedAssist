@@ -1,16 +1,11 @@
-import { Badge } from "@/app/styles/ui/badge";
-import { CardDescription, CardFooter, CardHeader, CardTitle, Card as CardWrapper } from "@/app/styles/ui/card";
+import { Dialog, Card as CardWrapper, CardHeader, CardTitle, CardDescription, CardFooter, DialogTrigger, Button, Badge } from "@/app/styles";
+import { toggleLoginModal, selectCurrentToken, useAppSelector, useAppDispatch } from "@/app/redux";
 import { PriorityType, User } from "@/types/request.interface";
 import convertPriority from "@/utils/convertPriority";
+import { ListType } from "@/components/ListComponent";
+import InfoModal from "@/components/InfoModal";
 import formatDate from "@/utils/formatDate";
-import { Dialog, DialogTrigger } from "@/app/styles/ui/dialog";
-import { Button } from "@/app/styles/ui/button";
-import InfoModal from "./InfoModal";
 import { useState } from "react";
-import { useAppDispatch, useAppSelector } from "@/app/redux/store";
-import { selectCurrentToken } from "@/app/redux/selectors";
-import { toggleLoginModal } from "@/app/redux/slices/modalSlice";
-import { ListType } from "./ListComponent";
 
 interface CardProps {
    id: number;

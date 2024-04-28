@@ -1,18 +1,14 @@
-import { Button } from "@/app/styles/ui/button";
-import { ButtonLoading } from "./ButtonLoading";
-import { Dialog, DialogContent } from "@/app/styles/ui/dialog";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/app/styles/ui/card";
+import { Button, Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle, Dialog, DialogContent, Toaster } from "@/app/styles";
+import { toggleLoginModal, toggleRequestModal } from "@/app/redux/slices/modalSlice";
+import { selectOpenRequest, useAppDispatch, useAppSelector } from "@/app/redux";
+import { ButtonLoading } from "@/components/ButtonLoading";
 import { UseFormReturn, useForm } from "react-hook-form";
+import AddRequestForm from "@/components/AddRequestForm";
+import { IAddRequest } from "@/types/request.interface";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { AddRequestSchema } from "@/utils/schema";
-import { IAddRequest } from "@/types/request.interface";
-import { useAddRequestMutation } from "@/api/endpoints/request.api";
+import { useAddRequestMutation } from "@/api";
 import { toast } from "sonner";
-import AddRequestForm from "./AddRequestForm";
-import { Toaster } from "@/app/styles/ui/sonner";
-import { useAppDispatch, useAppSelector } from "@/app/redux/store";
-import { toggleLoginModal, toggleRequestModal } from "@/app/redux/slices/modalSlice";
-import { selectOpenRequest } from "@/app/redux/selectors";
 
 const AddRequest = () => {
    const form: UseFormReturn<IAddRequest> = useForm<IAddRequest>({
@@ -47,7 +43,7 @@ const AddRequest = () => {
 
       try {
          await addRequest(data).unwrap();
-         toast("Успішно опубліковано"); 
+         toast("Успішно опубліковано");
          dispatch(toggleRequestModal());
          // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } catch (err: any) {

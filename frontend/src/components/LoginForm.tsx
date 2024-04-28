@@ -1,8 +1,7 @@
-import { LoginFormData } from "@/types/auth.interface";
 import { SubmitHandler, UseFormReturn } from "react-hook-form";
-import InputField from "./InputField";
-import { Form } from "@/app/styles/ui/form";
-import { Checkbox } from "@/app/styles/ui/checkbox";
+import { LoginFormData } from "@/types/auth.interface";
+import InputField from "@/components/InputField";
+import { Form, Checkbox } from "@/app/styles";
 import useToggle from "@/hooks/useToggle";
 
 type LoginFormProps = {

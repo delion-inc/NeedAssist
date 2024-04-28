@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/app/styles/ui/form";
-import { Input } from "@/app/styles/ui/input";
+import { FormControl, FormField, FormItem, FormLabel, FormMessage, Input } from "@/app/styles";
 import { Control, FieldValues, Path } from "react-hook-form";
 
 type InputFieldProps<T extends FieldValues> = {
@@ -8,7 +7,7 @@ type InputFieldProps<T extends FieldValues> = {
    name: Path<T>;
    label: string;
    type: string;
-   placeholder: string; 
+   placeholder: string;
 };
 
 const InputField = <T extends FieldValues>({ control, name, label, type, placeholder }: InputFieldProps<T>) => (
