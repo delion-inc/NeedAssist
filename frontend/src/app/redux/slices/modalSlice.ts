@@ -3,11 +3,13 @@ import { createSlice } from "@reduxjs/toolkit";
 interface IInitialState {
    openLoginModal: boolean,
    openRegisterModal: boolean, 
+   openRequestModal: boolean
 }
 
 const initialState: IInitialState = {
    openLoginModal: false,
    openRegisterModal: false, 
+   openRequestModal: false, 
 };
 
 const modalSlice = createSlice({
@@ -20,8 +22,11 @@ const modalSlice = createSlice({
       toggleRegisterModal: (state) => {
          state.openRegisterModal = !state.openRegisterModal;
       }, 
+      toggleRequestModal: (state) => {
+         state.openRequestModal = !state.openRequestModal;
+      }
    }
 })
 
-export const { toggleLoginModal, toggleRegisterModal } = modalSlice.actions;
+export const { toggleLoginModal, toggleRegisterModal, toggleRequestModal } = modalSlice.actions;
 export default modalSlice.reducer;

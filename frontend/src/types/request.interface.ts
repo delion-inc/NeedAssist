@@ -9,11 +9,18 @@ export interface IRequest {
    user: User;
 }
 
-export type PriorityType = "LOW" | "MEDIUM" | "HIGH";
+export type PriorityType = "LOW" | "MEDIUM" | "HIGH" | "";
 
-interface User {
+export interface User {
    name: string;
    surname: string;
    email: string;
    phone: string;
+} 
+
+export interface IAddRequest {
+   title: string;
+   description: string;
+   city: string;
+   priority: PriorityType;
 }

@@ -3,7 +3,7 @@ import Card from "./Card";
 import { Loader2 } from "lucide-react";
 import { useGetAllProposesQuery } from "@/api/endpoints/propose.api";
 
-type ListType = "requests" | "proposes";
+export type ListType = "requests" | "proposes";
 
 interface ListComponentProps {
   type: ListType;
@@ -21,7 +21,7 @@ const ListComponent: React.FC<ListComponentProps> = ({ type }) => {
             <Loader2 color="#176B87" className="absolute top-[45%] left-[49%] h-10 w-10 animate-spin" /> 
          ) : (
             data?.map((item) => (
-               <Card key={item.id} {...item} />
+               <Card key={item.id} {...item} type={type} />
             )) 
          )}
       </section>

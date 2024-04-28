@@ -1,6 +1,6 @@
 import { Badge } from "@/app/styles/ui/badge";
 import { CardDescription, CardFooter, CardHeader, CardTitle, Card as CardWrapper } from "@/app/styles/ui/card";
-import { IRequest } from "@/types/request.interface";
+import { PriorityType, User } from "@/types/request.interface";
 import convertPriority from "@/utils/convertPriority";
 import formatDate from "@/utils/formatDate";
 import { Dialog, DialogTrigger } from "@/app/styles/ui/dialog";
@@ -10,8 +10,20 @@ import { useState } from "react";
 import { useAppDispatch, useAppSelector } from "@/app/redux/store";
 import { selectCurrentToken } from "@/app/redux/selectors";
 import { toggleLoginModal } from "@/app/redux/slices/modalSlice";
+import { ListType } from "./ListComponent";
 
-const Card = ({ title, description, id, createdAt, city, user, priority }: IRequest) => {
+interface CardProps {
+   id: number;
+   title: string;
+   description: string;
+   priority: PriorityType;
+   createdAt: string;
+   city: string;
+   user: User;
+   type: ListType;
+}
+
+const Card = ({ title, description, id, createdAt, city, user, priority, type }: CardProps) => {
    const [isModalOpen, setIsModalOpen] = useState(false);
    const auth = useAppSelector(selectCurrentToken);
    const dispatch = useAppDispatch();
@@ -41,10 +53,9 @@ const Card = ({ title, description, id, createdAt, city, user, priority }: IRequ
                </CardHeader>
                <CardFooter className="flex items-center justify-between">
                   <DialogTrigger asChild>
-                     <Button onClick={onHelpClick}>Допомога</Button>
+                     <Button onClick={onHelpClick}>{type === "requests" ? "Допомогти" : "Відгукнутись"}</Button>
                   </DialogTrigger>
                   {isModalOpen && <InfoModal id={id} />}
-                  {/* <Button>Допомогти</Button> */}
                   <p className="text-muted-foreground">{formatDate(createdAt)}</p>
                </CardFooter>
             </CardWrapper>
