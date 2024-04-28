@@ -12,13 +12,19 @@ The backend of this project is built using Spring Boot & Spring Security for the
   ```git clone https://github.com/delion-inc/NeedAssist.git```
 3. Change your current directory to the project directory by entering ```cd NeedAssist``` in the command prompt.
 4. Ensure Docker Desktop is running on your PC. Then, in the command prompt, enter ```docker-compose up``` to start the project.
+5. Open ```http://localhost:4173``` in your browser.
 
 # **Technologies**
 - Frontend: React, TypeScript, Redux Toolkit, RTK Query, TailwindCSS
-- Backend: Java, Spring Boot, Spring Security, Lombok
+- Backend: Java, Spring Boot, Spring Security, Hibernate, Lombok
 - Database: PostgreSQL
 - Authentication: JSON Web Tokens (JWT)
 - Deployment: Docker
+
+- # **Guide**
+You have the choice to register as either a volunteer or a recipient. Every role can view all requests for help or donations, but
+If you register as a volunteer, you can only post offers for what you are willing to donate.
+If you register as a recipient, you can only post requests for help or items you need.
 
 # **API Documentation**
 
