@@ -40,32 +40,31 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     }
 
     @Override
-    public ResponseEntity<?> registration(User user) {
+    public UserDTO registration(User user) {
         if(user.getEmail() == null || user.getPassword() == null || user.getName() == null || user.getSurname() == null || user.getPhone() == null) {
-            return new ResponseEntity<>("All fields must be filled", HttpStatus.BAD_REQUEST);
+            throw new IllegalArgumentException("All fields must be filled");
         }
         if(userRepository.findByEmail(user.getEmail()) != null) {
-            return new ResponseEntity<>("User with email " + user.getEmail() + " already exist", HttpStatus.UNAUTHORIZED);
+            throw new IllegalArgumentException("User with email " + user.getEmail() + " already exists");
         }
 
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         user.setRoles(Collections.singletonList(Role.fromValue(user.getRole())));
         userRepository.save(user);
 
-        UserDTO userDTO = UserDTO.builder()
+        return UserDTO.builder()
                 .name(user.getName())
                 .surname(user.getSurname())
                 .email(user.getEmail())
                 .phone(user.getPhone())
                 .build();
-        return new ResponseEntity<>(userDTO, HttpStatus.CREATED);
     }
 
     @Override
-    public ResponseEntity<?> authorization(AuthRequest authRequest, HttpServletResponse response) {
+    public Map<String, Object> authorization(AuthRequest authRequest, HttpServletResponse response) {
         User user = getUserByEmail(authRequest.getEmail());
         if (!bCryptPasswordEncoder.matches(authRequest.getPassword(), user.getPassword())) {
-            return new ResponseEntity<>("Invalid password", HttpStatus.UNAUTHORIZED);
+            throw new IllegalArgumentException("Invalid password");
         }
 
         List<GrantedAuthority> authorities = user.getRoles().stream()
@@ -78,24 +77,22 @@ public class UserServiceImpl implements UserDetailsService, UserService {
         userRepository.save(user);
 
         jwtTokenService.setTokenCookies(response, refreshToken);
-        Map<String, Object> responseBody = createResponseBody(user, accessToken);
-        return new ResponseEntity<>(responseBody, HttpStatus.OK);
+        return createResponseBody(user, accessToken);
     }
 
     @Override
-    public ResponseEntity<?> refreshAuthToken(String refreshToken, HttpServletResponse response) {
+    public Map<String, Object> refreshAuthToken(String refreshToken, HttpServletResponse response) {
         User user = userRepository.findByRefreshToken(refreshToken);
         if (user == null) {
-            return new ResponseEntity<>("Invalid refreshToken", HttpStatus.BAD_REQUEST);
+            throw new IllegalArgumentException("Invalid refreshToken");
         }
 
         UserDetails userDetails = loadUserByUsername(user.getEmail());
         String accessToken = jwtTokenService.generateToken(userDetails);
 
         jwtTokenService.setTokenCookies(response, refreshToken);
-        Map<String, Object> responseBody = createResponseBody(user, accessToken);
         userRepository.save(user);
-        return new ResponseEntity<>(responseBody, HttpStatus.OK);
+        return createResponseBody(user, accessToken);
     }
 
     private Map<String, Object> createResponseBody(User user, String accessToken) {
@@ -109,15 +106,14 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     }
 
     @Override
-    public ResponseEntity<?> logout(String refreshToken, HttpServletResponse response) {
+    public void logout(String refreshToken, HttpServletResponse response) {
         User user = userRepository.findByRefreshToken(refreshToken);
         if (user == null) {
-            return new ResponseEntity<>("Invalid refreshToken", HttpStatus.BAD_REQUEST);
+            throw new IllegalArgumentException("Invalid refreshToken");
         }
         user.setRefreshToken("");
         userRepository.save(user);
         response.setHeader("Set-Cookie", "refreshToken=; HttpOnly; SameSite=None; Secure; Max-age=0");
-        return ResponseEntity.noContent().build();
     }
 
     private User getUserByEmail(String email) {

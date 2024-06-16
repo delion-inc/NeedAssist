@@ -1,15 +1,19 @@
 package org.example.taskhackathon.service;
 
 import org.example.taskhackathon.dto.request.RequestRequestDTO;
+import org.example.taskhackathon.dto.response.RequestResponseDTO;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public interface RequestService {
 
-    ResponseEntity<?> addRequest(RequestRequestDTO request, String email);
+    RequestResponseDTO addRequest(RequestRequestDTO request, String email);
 
-    ResponseEntity<?> getRequestById(Long id);
+    RequestResponseDTO getRequestById(Long id);
 
-    ResponseEntity<?> getAll(String role);
+    List<RequestResponseDTO> getAll(String role);
 }
+

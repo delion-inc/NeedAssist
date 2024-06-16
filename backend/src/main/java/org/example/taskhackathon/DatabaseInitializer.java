@@ -19,10 +19,13 @@ public class DatabaseInitializer implements CommandLineRunner {
 
     private final DataSource dataSource;
 
+    @Value("${datasource.init.sql.url}")
+    private String url;
+
     @Override
     public void run(String... args) throws Exception {
         try (Connection conn = dataSource.getConnection()) {
-            String sql = new String(Files.readAllBytes(Paths.get("/init.sql")));
+            String sql = new String(Files.readAllBytes(Paths.get(url)));
             try (Statement stmt = conn.createStatement()) {
                 stmt.execute(sql);
             }

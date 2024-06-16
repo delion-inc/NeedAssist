@@ -17,7 +17,6 @@ import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
-
 @Service
 @RequiredArgsConstructor
 public class RequestServiceImpl implements RequestService {
@@ -29,7 +28,7 @@ public class RequestServiceImpl implements RequestService {
     private static final String DATA_TIME_FORMAT = "yyyy-MM-dd HH:mm:ss";
 
     @Override
-    public ResponseEntity<RequestResponseDTO> addRequest(RequestRequestDTO requestDTO, String email) {
+    public RequestResponseDTO addRequest(RequestRequestDTO requestDTO, String email) {
         User user = getUserByEmail(email);
         Request request = Request.builder()
                 .title(requestDTO.getTitle())
@@ -40,7 +39,7 @@ public class RequestServiceImpl implements RequestService {
                 .user(user)
                 .build();
         requestRepository.save(request);
-        return new ResponseEntity<>(mapRequestToRequestResDTO(request), HttpStatus.CREATED);
+        return mapRequestToRequestResDTO(request);
     }
 
     private String createTime() {
@@ -49,18 +48,17 @@ public class RequestServiceImpl implements RequestService {
     }
 
     @Override
-    public ResponseEntity<List<RequestResponseDTO>> getAll(String role) {
-        List<RequestResponseDTO> requests = requestRepository.findAll().stream()
+    public List<RequestResponseDTO> getAll(String role) {
+        return requestRepository.findAll().stream()
                 .filter(request -> request.getUser().getRoles().stream().anyMatch(r -> r.name().equals(role)))
                 .map(this::mapRequestToRequestResDTO)
                 .collect(Collectors.toList());
-        return new ResponseEntity<>(requests, HttpStatus.OK);
     }
 
     @Override
-    public ResponseEntity<RequestResponseDTO> getRequestById(Long id) {
+    public RequestResponseDTO getRequestById(Long id) {
         Request request = requestRepository.findById(id).orElseThrow(() -> new RuntimeException("Request not found"));
-        return new ResponseEntity<>(mapRequestToRequestResDTO(request), HttpStatus.OK);
+        return mapRequestToRequestResDTO(request);
     }
 
     private RequestResponseDTO mapRequestToRequestResDTO(Request request) {
